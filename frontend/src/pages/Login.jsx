@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Wrapper from "../assets/wrappers/Login";
 
 function Login({ setUser }) {
   const [formData, setFormData] = useState({
@@ -31,7 +33,55 @@ function Login({ setUser }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <Wrapper>
+      {/*    <div className="back-btn">
+        <Link to="/costumer" className="member-btn">
+          <p>← Back</p>
+        </Link>
+      </div> */}
+      <form onSubmit={handleSubmit}>
+        <div className="login-section">
+          <div className="login-container">
+            <p>Welcome! Please sign in to continue.</p>
+
+            {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
+
+            <div className="login-input">
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div className="login-input">
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <div className="login-btn">
+              <button className="login-btn-btn">Login</button>
+            </div>
+            <h7>
+              Don’t have an account?
+              <Link to="/register" className="member-btn">
+                <span> &nbsp;Register</span>
+              </Link>
+            </h7>
+          </div>
+        </div>
+      </form>
+    </Wrapper>
+  );
+
+  /*  <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-200">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Login
@@ -71,8 +121,8 @@ function Login({ setUser }) {
           </button>
         </form>
       </div>
-    </div>
-  );
+    </div> 
+  );*/
 }
 
 export default Login;

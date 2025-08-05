@@ -8,8 +8,10 @@ import Nabvar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -36,12 +38,13 @@ function App() {
 
   return (
     <Router>
-      <Nabvar />
+      <Nabvar user={user} setUser={setUser} />
       <Routes>
         <Route path="" element={<Home user={user} error={error} />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/register" element={<Register setUser={setUser} />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

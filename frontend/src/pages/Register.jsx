@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Wrapper from "../assets/wrappers/Register";
 
 function Register({ setUser }) {
   const [formData, setFormData] = useState({
@@ -32,7 +34,64 @@ function Register({ setUser }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <Wrapper>
+      <form onSubmit={handleSubmit}>
+        <div className="back-btn">
+          <Link to="/costumer" className="member-btn">
+            <p>← Back</p>
+          </Link>
+        </div>
+        <div className="register-section">
+          <div className="register-container">
+            <p>Welcome! Please register to continue.</p>
+            {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
+            <div className="login-input register-input">
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+            <div className="login-input">
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div className="login-input">
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <div className="register-btn">
+              <button className="register-btn-btn">Register</button>
+            </div>
+            <h7>
+              Already a member?
+              <Link to="/login" className="member-btn">
+                <span> &nbsp;Login</span>
+              </Link>
+            </h7>
+          </div>
+        </div>
+      </form>
+    </Wrapper>
+  );
+
+  {
+    /* <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-200">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Register
@@ -87,8 +146,8 @@ function Register({ setUser }) {
           </button>
         </form>
       </div>
-    </div>
-  );
+    </div> */
+  }
 }
 
 export default Register;
