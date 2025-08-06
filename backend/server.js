@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/userRoutes.js"; // ✅ NEW
 import { connectDB } from "./config/db.js";
 
 dotenv.config();
@@ -9,16 +10,13 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-// ✅ Enable CORS for frontend port 5174
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-
-// Parse JSON bodies
 app.use(express.json());
 
-// Routes
-app.use("/api/users", authRoutes);
+// ✅ Routes
+app.use("/api/users", authRoutes); // login/register/me
+app.use("/api/users", userRoutes); // CRUD: get, update, delete
 
-// Connect to DB and start server
 connectDB();
 
 app.listen(PORT, () => {
