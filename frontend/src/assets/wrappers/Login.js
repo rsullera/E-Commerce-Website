@@ -6,12 +6,7 @@ const Wrapper = styled.section`
   //////LOGIN SECTION///////////////
   .login-section {
     height: 100vh;
-    background-image: linear-gradient(
-        to right,
-        rgba(42, 24, 21, 0.9),
-        rgba(255, 255, 255, 0.2)
-      ),
-      url("src/assets/images/kkplace.jpg");
+    background-image: url("src/assets/images/kk.jpg");
 
     background-repeat: no-repeat;
     background-position: center;

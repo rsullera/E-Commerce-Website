@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProductList from "./pages/ProductList";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -49,6 +50,7 @@ function App() {
         <Route path="/Users" element={<Users />} />
         <Route path="/create" element={<CreateUser />} />
         <Route path="/update/:id" element={<UpdateUser />} />
+        <Route path="/product" element={<ProductList />} />
       </Routes>
       <Footer />
     </Router>
