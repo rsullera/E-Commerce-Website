@@ -4,7 +4,7 @@ import logo from "../assets/images/mainlogo.svg";
 const Footer = () => {
   return (
     <Wrapper>
-      <div className="footer-logo">
+      <div className="footer-logo" id="footer-section">
         <img src={logo} alt="Kape Kalakal Logo" />
         <p>Kape / Kalakal</p>
       </div>

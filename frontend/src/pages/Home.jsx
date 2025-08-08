@@ -33,22 +33,26 @@ const Home = ({ user, error }) => {
     <Wrapper>
       <main>
         {/* HERO SECTION */}
-        <section className="hero-section">
+        <section className="hero-section" id="hero-section">
           <img src={mag} alt="" className="hero-image-image" />
           <p className="main-text">
             Let your mug carry <br /> the moments.
           </p>
           <p className="sub-text">Your timeless brew is just a click away.</p>
-          <div className="hero-btn">
-            <button className="hero-btn-btn">Order Now</button>
-          </div>
+          <Link to="/product#product-section" className="nav-link">
+            <div className="hero-btn">
+              <button className="hero-btn-btn">Order Now</button>
+            </div>
+          </Link>
         </section>
 
         {/* BEST SECTION */}
         <section className="best-section">
           <div className="best-text">
             <p className="main-best-text">Best Sellers</p>
-            <p className="sub-best-text">Browse all products →</p>
+            <Link to="/product#product-section" className="nav-link">
+              <p className="sub-best-text">Browse all products →</p>
+            </Link>
           </div>
           <div className="best-container">
             <div className="card">
@@ -120,15 +124,17 @@ const Home = ({ user, error }) => {
           <p className="main-off-text">
             Grab Upto 50% Off on <br />
             Selected Coffee
-          </p>
-          <div className="off-btn">
-            <button className="off-btn-btn">Order Now</button>
-          </div>
+          </p>{" "}
+          <Link to="/product#product-section" className="nav-link">
+            <div className="off-btn">
+              <button className="off-btn-btn">Buy Now</button>
+            </div>
+          </Link>
           <img src={cap} alt="" className="off-image" />
         </section>
 
         {/* ABOUT SECTION */}
-        <section className="about-section">
+        <section className="about-section" id="about-section">
           <p className="main-about-text">Our Story</p>
           <div className="about-info">
             <p className="sub-about-text">

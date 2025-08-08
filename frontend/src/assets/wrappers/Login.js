@@ -3,8 +3,101 @@ const Wrapper = styled.section`
   margin: 0;
   padding: 0;
 
-  //////LOGIN SECTION///////////////
   .login-section {
+    height: 100vh;
+    background-image: url("src/assets/images/kk.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-container {
+    margin-top: 70px;
+    height: auto;
+    width: 500px;
+    /*  border: 2px solid #174e4f; */
+    background-color: #f3e5ce;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .login-welcome {
+    font-size: 36px;
+    font-family: "Playfair Display";
+    margin: 50px 50px 20px 50px;
+    text-align: center;
+    color: #174e4f;
+    font-weight: 700;
+  }
+  .login-input {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    margin: 0 60px 0 60px;
+    font-size: 20px;
+    font-family: "Playfair Display";
+    color: #174e4f;
+    font-weight: 600;
+  }
+  input {
+    height: 45px;
+    font-size: 22px;
+    background-color: #f3e5ce;
+    border: 2px solid #174e4f;
+    margin: 0 60px 10px 60px;
+    border-radius: 8px;
+    padding-left: 10px;
+  }
+
+  input::placeholder {
+    font-size: 22px;
+  }
+
+  .login-btn {
+    text-align: center;
+    font-family: "Playfair Display";
+    font-size: 28px;
+    height: 45px;
+    border: 2px solid #174e4f;
+    margin: 20px 60px 20px 60px;
+    background-color: #174e4f;
+    color: #f3e5ce;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .login-btn-btn {
+    display: inline-block;
+    height: auto;
+    width: 100%;
+  }
+
+  .login-account {
+    margin: 0 60px 0 60px;
+    font-size: 20px;
+    font-family: "Playfair Display";
+    color: #174e4f;
+    font-weight: 600;
+    text-align: center;
+    margin: 5px 0 50px 0;
+  }
+  .register {
+    color: red;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .error {
+    color: #ef4444; /* red-500 */
+    margin: 0 60px 16px 60px; /* 16px */
+    font-size: 14px;
+  }
+  //////LOGIN SECTION///////////////
+  /* .login-section {
     height: 100vh;
     background-image: url("src/assets/images/kk.jpg");
 
@@ -21,22 +114,22 @@ const Wrapper = styled.section`
     height: 500px;
     width: 500px;
     border: 2px solid red;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: #f3e5ce;
     border-radius: 24px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
-    border: 1px solid #38220f;
-    /* backdrop-filter: blur(12px); */
-    /* 
-    background-color: transparent;*/
-
+    border: 1px solid #174e4f;
+    backdrop-filter: blur(12px);
+    
+    background-color: transparent;
+    
     backdrop-filter: blur(12px) brightness(1.2) saturate(120%);
     -webkit-backdrop-filter: blur(12px) brightness(1.2) saturate(120%);
   }
   .login-container p {
-    font-size: 44px;
+    font-size: 36px;
     text-align: center;
-    padding: 50px 50px 30px 50px;
-    color: #403026;
+    padding: 40px 40px 20px 40px;
+    color: #174e4f;
     font-weight: 600;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   }
@@ -49,7 +142,7 @@ const Wrapper = styled.section`
   }
 
   input {
-    height: 56px;
+    height: 46px;
     width: 400px;
     border: 2px solid #281d17;
     border-radius: 12px;
@@ -99,6 +192,6 @@ const Wrapper = styled.section`
     font-weight: 600;
     cursor: pointer;
     font-size: 24px;
-  }
+  } */
 `;
 export default Wrapper;

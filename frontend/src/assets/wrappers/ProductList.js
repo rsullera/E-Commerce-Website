@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   margin: 0;
   padding: 0;
+  font-family: "Playfair Display";
 
   .product-section {
     height: 100%;
@@ -28,12 +29,97 @@ const Wrapper = styled.section`
     padding: 20px 70px 70px 70px;
   }
 
+  .product-info {
+    display: flex;
+  }
+  .product-category {
+    font-size: 48px;
+    margin: 40px 40px 20px 40px;
+    color: #174e4f;
+    font-weight: 600;
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 20px;
+    margin: 30px;
+  }
+
+  ////// CARD PRODUCT START
+  .card {
+    width: 270px;
+    height: 370px;
+    background: linear-gradient(135deg, #174e4f 55%, #f3e5ce 50%);
+    border-radius: 16px;
+    padding: 10px;
+    position: relative;
+    font-family: "Roboto";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: #fff;
+    border: 1px solid #174e4f;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #f3e5ce;
+    border: none;
+  }
+
+  .price {
+    background-color: #f3e5ce;
+    color: #174e4f;
+    padding: 14px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 26px;
+  }
+
+  .image-container {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid #f3e5ce;
+    margin-top: 5px;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .add-to-cart {
+    background-color: #174e4f;
+    color: #f3e5ce;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .add-to-cart:hover {
+    background-color: #0f3a3b;
+  }
+
+  //////CARD  PRODUCT END
+
   ///PRODUCT-SIDEBAR
 
   .product-sidebar {
-    height: 100%;
+    height: auto;
     width: 350px;
-    border: 2px solid red;
+    border-right: 2px solid red;
   }
   .product-searchbar {
     display: flex;

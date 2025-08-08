@@ -61,32 +61,107 @@ const Wrapper = styled.section`
   .nav-login button {
     font-size: 18px;
     padding: 8px 32px;
-    border: none;
-    border-radius: 16px;
+
+    border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     font-family: "Roboto";
   }
 
-  /* Sign In button */
-  .nav-login button:first-child {
+  .sign-in {
     background-color: #f3e5ce;
     color: #174e4f;
+    border: 1px solid #f3e5ce;
   }
 
-  /* Sign Up button */
-  .nav-login button:last-child {
+  .sign-in:hover {
+    background-color: #e7d5b8;
+  }
+
+  .sign-up {
     background-color: #174e4f;
     color: #f3e5ce;
     border: 1px solid #f3e5ce;
   }
-  .nav-login button:first-child:hover {
-    background-color: #e7d5b8;
+  .sign-up:hover {
+    background-color: #0f3a3b;
   }
 
-  .nav-login button:last-child:hover {
-    background-color: #0f3a3b;
+  .cart-icon {
+    color: #f3e5ce;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 30px;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .welcome {
+    color: #f3e5ce;
+    font-size: 18px;
+    user-select: none;
+    cursor: default;
+    margin-right: 5px;
+  }
+
+  .username {
+    color: #f3e5ce;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .username:hover {
+    color: #e7d5b8;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 22px;
+    right: 0;
+    background-color: #f5e9df;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 140px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    flex-direction: column;
+    padding: 5px 0;
+    z-index: 10;
+  }
+
+  .username:hover + .dropdown-content,
+  .dropdown-content:hover {
+    display: flex;
+  }
+
+  .dropdown-item {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    font-size: 20px;
+    color: #4a2e2c;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    font-family: "Roboto";
+  }
+
+  .dropdown-item:hover {
+    background-color: #e8d7c6;
   }
 `;
 

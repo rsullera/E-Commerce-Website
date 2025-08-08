@@ -164,7 +164,7 @@ const Wrapper = styled.main`
     font-size: 58px;
     line-height: 88px;
     color: #f3e5ce;
-    padding: 40px 70px 40px 70px;
+    padding: 40px 70px 15px 70px;
   }
 
   .off-btn {

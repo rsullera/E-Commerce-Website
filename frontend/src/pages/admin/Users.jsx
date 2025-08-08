@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Wrapper from "../../assets/wrappers/Users";
 
 function Users() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
+  const usersPerPage = 6;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -35,7 +36,7 @@ function Users() {
     }
   };
 
-  // Pagination logic
+  // Pagination calculations
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
@@ -51,6 +52,7 @@ function Users() {
             currentPage === i ? "btn-primary" : "btn-outline-primary"
           }`}
           onClick={() => setCurrentPage(i)}
+          aria-current={currentPage === i ? "page" : undefined}
         >
           {i}
         </button>
@@ -60,61 +62,57 @@ function Users() {
   };
 
   return (
-    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
-      <div className="w-75 bg-white rounded p-3">
-        <Link to="/create" className="btn btn-success mb-2">
-          Add +
-        </Link>
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.length === 0 ? (
+    <Wrapper>
+      <div className="page-container">
+        <div className="card">
+          <Link to="/create" className="btn-add">
+            Add +
+          </Link>
+          <table className="table-custom">
+            <thead>
               <tr>
-                <td colSpan="5" className="text-center">
-                  No users found.
-                </td>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Date</th>
+                <th>Action</th>
               </tr>
-            ) : (
-              currentUsers.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>{new Date(user.date).toLocaleDateString()}</td>
-                  <td>
-                    <Link
-                      to={`/update/${user._id}`}
-                      className="btn btn-success me-2"
-                    >
-                      Update
-                    </Link>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDelete(user._id)}
-                    >
-                      Delete
-                    </button>
+            </thead>
+            <tbody>
+              {currentUsers.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="text-center">
+                    No users found.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                currentUsers.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.role}</td>
+                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td>
+                      <Link to={`/update/${user._id}`} className="btn-update">
+                        Update
+                      </Link>
+                      <button
+                        className="btn-delete"
+                        onClick={() => handleDelete(user._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
 
-        {/* Pagination Controls */}
-        <div className="mt-3 d-flex justify-content-center">
-          {renderPagination()}
+          <div className="pagination-container">{renderPagination()}</div>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
