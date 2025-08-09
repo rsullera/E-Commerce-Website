@@ -39,6 +39,21 @@ const Wrapper = styled.section`
     font-weight: 600;
   }
 
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30px;
+  }
+
+  .sort-dropdown {
+    font-size: 20px;
+    padding: 5px 10px;
+    border: 1px solid #174e4f;
+    border-radius: 4px;
+    color: #174e4f;
+    background-color: #f3e5ce;
+  }
   .card-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 columns */

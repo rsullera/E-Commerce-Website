@@ -17,7 +17,7 @@ import Users from "./pages/admin/Users";
 import CreateUser from "./pages/admin/CreateUser";
 import UpdateUser from "./pages/admin/UpdateUser";
 import Admin from "./pages/Admin";
-/* import Cart from "./pages/Cart"; */
+import Cart from "./pages/Cart";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,7 +63,7 @@ function AppContent({ user, setUser, error }) {
         <Route path="/create" element={<CreateUser />} />
         <Route path="/update/:id" element={<UpdateUser />} />
         <Route path="/product" element={<ProductList />} />
-        {/* <Route path="/cart" element={<Cart />} /> */}
+        <Route path="/cart" element={<Cart />} />
 
         {/* Admin page without Navbar/Footer */}
         <Route

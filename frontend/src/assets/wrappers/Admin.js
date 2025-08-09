@@ -5,10 +5,6 @@ const Wrapper = styled.section`
   padding: 0;
   color: #f3e5ce;
 
-  :root {
-    all: unset;
-  }
-
   .admin-section {
     height: 100vh;
     background-color: #f3e5ce;

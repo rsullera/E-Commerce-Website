@@ -48,7 +48,17 @@ function ProductList() {
               </div>
             </div>
             <div className="product-list">
-              <p className="product-category">Product Category</p>
+              <div className="product-header">
+                <p className="product-category">Product Category</p>
+
+                <select className="sort-dropdown">
+                  <option value="">Sort by</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="name-asc">Name: A-Z</option>
+                  <option value="name-desc">Name: Z-A</option>
+                </select>
+              </div>
 
               <div className="card-container">
                 <div className="card">
