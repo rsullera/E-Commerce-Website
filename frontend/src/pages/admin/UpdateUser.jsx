@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Wrapper from "../../assets/wrappers/UpdateUser";
 
 function UpdateUser() {
   const { id } = useParams(); // ✅ Fix here
@@ -34,34 +35,37 @@ function UpdateUser() {
         { username, email },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then(() => navigate("/users"))
+      .then((result) => {
+        alert("Account successfully Updated!");
+        console.log(result);
+        navigate("/admin");
+      })
       .catch((err) => console.log("Error updating user:", err));
   };
 
   return (
-    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
-      <div className="w-50 bg-white rounded p-3">
+    <Wrapper>
+      <div className="form-container">
         <form onSubmit={handleUpdate}>
           <h2>Update User</h2>
-          <div className="mb-2">
-            <label>Name</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setName(e.target.value)}
-              className="form-control"
-            />
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-control"
-            />
-          </div>
-          <button className="btn btn-success">Update</button>
+          <label htmlFor="username">Name</label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button type="submit">Update</button>
         </form>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 

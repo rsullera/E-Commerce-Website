@@ -1,43 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Wrapper from "../assets/wrappers/Admin";
 import coffee from "../assets/images/nguso1.png";
-import { Link, redirect, useNavigate } from "react-router-dom";
-
-// Import the section components
-import Users from "./admin/Users";
-import Products from "./admin/UpdateUser";
-import Orders from "./admin/CreateUser";
+import { Link, useNavigate, Outlet, useLocation } from "react-router-dom";
 
 const Admin = ({ user, setUser }) => {
   const navigate = useNavigate();
-  const [activeItem, setActiveItem] = useState("Users");
-  /*   console.log(1, user);
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
- */
+  const location = useLocation();
+
+  // Map sidebar items to route paths
+  const sideItems = [
+    { label: "Users", path: "/admin" },
+    { label: "Products", path: "/admin/products" },
+    { label: "Orders", path: "/admin/order" },
+  ];
+
+  // Determine active sidebar item by matching location.pathname
+  const activeItem =
+    sideItems
+      .slice()
+      .sort((a, b) => b.path.length - a.path.length)
+      .find(
+        (item) =>
+          location.pathname === item.path ||
+          location.pathname.startsWith(item.path)
+      )?.label || "Users";
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
     navigate("/login");
-  };
-
-  const sideItem = ["Users", "Products", "Orders"];
-
-  // Function to render the selected component
-  const renderSection = () => {
-    switch (activeItem) {
-      case "Users":
-        return <Users />;
-      case "Products":
-        return <Products />;
-      case "Orders":
-        return <Orders />;
-      default:
-        return <Users />;
-    }
   };
 
   return (
@@ -55,13 +46,14 @@ const Admin = ({ user, setUser }) => {
           <hr />
           <div className="admin-panel">
             <label className="admin-text">Admin Sections</label>
-            {sideItem.map((item) => (
+            {sideItems.map(({ label, path }) => (
               <p
-                key={item}
-                className={activeItem === item ? "active" : ""}
-                onClick={() => setActiveItem(item)}
+                key={label}
+                className={activeItem === label ? "active" : ""}
+                onClick={() => navigate(path)}
+                style={{ cursor: "pointer" }}
               >
-                {item}
+                {label}
               </p>
             ))}
           </div>
@@ -75,11 +67,13 @@ const Admin = ({ user, setUser }) => {
         <div className="admin-dashboard right">
           <div className="admin-welcome">
             <label>Admin Panel</label>
-            <p>Welcome {user?.username || "Admin"}</p>
+            <label>Welcome {user?.username || "Admin"}</label>
           </div>
 
-          {/* This is where the selected section will appear */}
-          <div className="admin-content">{renderSection()}</div>
+          {/* This is where nested routes render */}
+          <div className="admin-content">
+            <Outlet />
+          </div>
         </div>
       </section>
     </Wrapper>

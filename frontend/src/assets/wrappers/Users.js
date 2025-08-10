@@ -1,16 +1,10 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-  /* Container for entire page with full viewport height, centered content */
-  /*  .page-container {
-    display: flex;
-    height: auto; 
-    background-color: #0d6efd; 
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: border-box;
-  } */
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto";
+
   .page-container {
     display: flex;
     justify-content: center;
@@ -23,23 +17,31 @@ const Wrapper = styled.section`
     width: 100%;
     height: auto;
     background-color: white;
-    border-radius: 0.375rem; /* similar to Bootstrap rounded */
-    padding: 1.5rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    overflow-x: auto; /* horizontal scroll on small screens */
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
+    overflow-x: auto;
+    color: #174e4f;
+  }
+
+  .users-dashboard {
+    display: flex;
+    justify-content: space-between;
   }
 
   /* Add button */
   .btn-add {
-    margin-bottom: 1rem;
-    background-color: #198754; /* Bootstrap success green */
+    margin-bottom: 16px;
+    background-color: #198754;
     border: none;
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    width: 200px;
+    text-align: center;
   }
 
   .btn-add:hover {
@@ -54,13 +56,13 @@ const Wrapper = styled.section`
   }
 
   .table-custom thead {
-    background-color: #f8f9fa; /* light gray */
+    background-color: #f8f9fa;
   }
 
   .table-custom th,
   .table-custom td {
     border: 1px solid #dee2e6;
-    padding: 0.75rem;
+    padding: 12px;
     text-align: left;
     vertical-align: middle;
   }
@@ -71,12 +73,12 @@ const Wrapper = styled.section`
 
   /* Buttons in action column */
   .btn-update {
-    margin-right: 0.5rem;
+    margin-right: 8px;
     background-color: #198754;
     border: none;
     color: white;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.375rem;
+    padding: 6px 12px;
+    border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
   }
@@ -89,8 +91,8 @@ const Wrapper = styled.section`
     background-color: #dc3545;
     border: none;
     color: white;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.375rem;
+    padding: 6px 12px;
+    border-radius: 6px;
     cursor: pointer;
   }
 
@@ -100,10 +102,10 @@ const Wrapper = styled.section`
 
   /* Pagination container */
   .pagination-container {
-    margin-top: 1rem;
+    margin-top: 16px;
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 8px;
   }
 `;
 

@@ -23,7 +23,7 @@ const Navbar = ({ user, setUser }) => {
               <Link to="/#hero-section" className="nav-link">
                 <li>Home</li>
               </Link>
-              <Link to="/product#product-section" className="nav-link">
+              <Link to="/productlist#product-section" className="nav-link">
                 <li>Product</li>
               </Link>
               <Link to="/#about-section" className="nav-link">

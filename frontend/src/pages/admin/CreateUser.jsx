@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Wrapper from "../../assets/wrappers/CreateUser";
 
 function CreateUser() {
   const [username, setName] = useState();
@@ -21,49 +22,60 @@ function CreateUser() {
         date,
       })
       .then((result) => {
+        alert("Account successfully created!");
         console.log(result);
-        navigate("/users");
+        navigate("/admin");
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
-      <div className="w-50 bg-white rounded p-3">
-        <form onSubmit={Submit}>
-          <h2>Add User</h2>
-          <div className="mb-2">
-            <label htmlFor="">Name</label>
-            <input
-              type="text"
-              placeholder="Enter Name"
-              className="form-control"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Email</label>
-            <input
-              type="text"
-              placeholder="Enter Email"
-              className="form-control"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-2">
-            <label htmlFor="">Password</label>
-            <input
-              type="text"
-              placeholder="Enter Password"
-              className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+    <Wrapper>
+      <div className="create-user-container">
+        <div className="create-user-box">
+          <form onSubmit={Submit}>
+            <h2>Add User</h2>
 
-          <button className="btn btn-success">Submit</button>
-        </form>
+            <div className="create-user-form-group">
+              <label>Name</label>
+              <input
+                type="text"
+                placeholder="Enter Name"
+                onChange={(e) => setName(e.target.value)}
+                value={username}
+                required
+              />
+            </div>
+
+            <div className="create-user-form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="Enter Email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+              />
+            </div>
+
+            <div className="create-user-form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                required
+              />
+            </div>
+
+            <button type="submit" className="create-user-submit-btn">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 

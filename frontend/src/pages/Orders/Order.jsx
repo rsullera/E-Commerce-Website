@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Wrapper from "../../assets/wrappers/Users";
 
-function Users() {
+function Order() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
@@ -122,4 +122,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Order;

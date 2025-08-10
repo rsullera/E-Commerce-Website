@@ -13,11 +13,14 @@ import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Admin from "./pages/Admin";
 import Users from "./pages/admin/Users";
 import CreateUser from "./pages/admin/CreateUser";
 import UpdateUser from "./pages/admin/UpdateUser";
-import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
+import Products from "./pages/products/Products";
+import Order from "./pages/Orders/Order";
+import CheckOut from "./pages/CheckOut";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -62,14 +65,20 @@ function AppContent({ user, setUser, error }) {
         <Route path="/users" element={<Users />} />
         <Route path="/create" element={<CreateUser />} />
         <Route path="/update/:id" element={<UpdateUser />} />
-        <Route path="/product" element={<ProductList />} />
+        <Route path="/productlist" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<CheckOut />} />
 
         {/* Admin page without Navbar/Footer */}
-        <Route
-          path="/admin"
-          element={<Admin user={user} setUser={setUser} />}
-        />
+        <Route path="/admin" element={<Admin user={user} setUser={setUser} />}>
+          <Route index element={<Users />} /> {/* /admin */}
+          <Route path="create" element={<CreateUser />} /> {/* /admin/create */}
+          <Route path="update/:id" element={<UpdateUser />} />
+          {/* /admin/update/:id */}
+          {/* Add Products, Orders nested routes here too if needed */}
+          <Route path="products" element={<Products />} />
+          <Route path="order" element={<Order />} />
+        </Route>
       </Routes>
       {!hideLayout && <Footer />}
     </>
