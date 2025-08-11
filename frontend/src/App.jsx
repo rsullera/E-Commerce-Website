@@ -4,29 +4,26 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ProductList from "./pages/ProductList";
-import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Admin from "./pages/Admin";
-import ProductDetails from "./pages/ProductDetails";
-
-import Cart from "./pages/Cart";
-import Order from "./pages/Orders/Order";
-import CheckOut from "./pages/CheckOut";
-
-import Users from "./pages/admin/Users";
-import CreateUser from "./pages/admin/CreateUser";
-import UpdateUser from "./pages/admin/UpdateUser";
-
-import Products from "./pages/products/Products";
-import CreateProducts from "./pages/products/CreateProducts";
-import UpdateProducts from "./pages/products/UpdateProducts";
+import {
+  Navbar,
+  Home,
+  Login,
+  Register,
+  ProductList,
+  Footer,
+  Admin,
+  ProductDetails,
+  Cart,
+  Order,
+  CheckOut,
+  Users,
+  CreateUser,
+  UpdateUser,
+  Products,
+  CreateProducts,
+  UpdateProducts,
+} from "./pages";
+import React, { useState, useEffect } from "react";
 
 function App() {
   const [user, setUser] = useState(null);

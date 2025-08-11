@@ -30,6 +30,11 @@ const Wrapper = styled.section`
     justify-content: space-between;
   }
 
+  .users-dashboard h2 {
+    font-size: 32px;
+    font-weight: 600;
+  }
+
   /* Add button */
   .btn-add {
     margin-bottom: 16px;
@@ -107,6 +112,40 @@ const Wrapper = styled.section`
     display: flex;
     justify-content: center;
     gap: 8px;
+  }
+
+  /* Pagination buttons default */
+  .btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-outline-primary {
+    color: #0d6efd;
+    background-color: transparent;
+    border-color: #0d6efd;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+    /* smooth transition for hover */
+    transition: background-color 0.3s ease;
+  }
+
+  /* ADD hover for active pagination button */
+  .btn-primary:hover {
+    background-color: #084298; /* a darker shade of blue */
+    color: white;
   }
 `;
 

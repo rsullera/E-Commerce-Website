@@ -4,6 +4,7 @@ const Wrapper = styled.section`
   margin: 0;
   padding: 0;
   font-family: "Playfair Display";
+  color: #174e4f;
 
   .product-section {
     height: 100%;
@@ -34,7 +35,7 @@ const Wrapper = styled.section`
   }
   .product-category {
     font-size: 48px;
-    margin: 40px 40px 20px 40px;
+    margin: 40px 40px 0 40px;
     color: #174e4f;
     font-weight: 600;
   }
@@ -42,7 +43,7 @@ const Wrapper = styled.section`
   .product-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     padding-right: 30px;
   }
 
@@ -53,6 +54,7 @@ const Wrapper = styled.section`
     border-radius: 4px;
     color: #174e4f;
     background-color: #f3e5ce;
+    margin-bottom: 15px;
   }
   .card-container {
     display: grid;
@@ -134,7 +136,7 @@ const Wrapper = styled.section`
   .product-sidebar {
     height: auto;
     width: 350px;
-    border-right: 2px solid red;
+    border-right: 2px solid #174e4f;
   }
   .product-searchbar {
     display: flex;
@@ -143,8 +145,12 @@ const Wrapper = styled.section`
     padding: 20px 0 20px 0;
   }
   .searchbar {
-    border: 2px solid blue;
-    width: 90%;
+    border: 2px solid #174e4f;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 26px;
   }
 
   .product-sidebar {
@@ -154,6 +160,7 @@ const Wrapper = styled.section`
   .category-title {
     font-weight: bold;
     margin-bottom: 10px;
+    font-size: 26px;
   }
 
   .category-list {
@@ -162,6 +169,7 @@ const Wrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-size: 22px;
   }
 
   .category-button {
@@ -170,11 +178,14 @@ const Wrapper = styled.section`
     padding: 10px 15px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: start;
+    transition: background-color 0.6s ease, width 0.6s ease;
   }
 
   .category-button:hover {
     background-color: #e2c49a;
+    width: 100%;
   }
 `;
 export default Wrapper;

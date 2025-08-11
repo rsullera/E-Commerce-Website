@@ -3,7 +3,7 @@ import Wrapper from "../assets/wrappers/Home";
 
 import coffee from "../assets/images/cofff.webp";
 import mag from "../assets/images/mag3.png";
-import cap from "../assets/images/cofemodel.png";
+import cap from "../assets/images/modelcoffee.png";
 import store from "../assets/images/kk.jpg";
 
 import { useEffect } from "react";

@@ -19,8 +19,10 @@ const Wrapper = styled.section`
   }
 
   form h2 {
-    margin-bottom: 16px;
+    font-size: 32px;
     font-weight: 600;
+    margin-bottom: 10px;
+    color: #174e4f;
   }
 
   label {

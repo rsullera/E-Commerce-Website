@@ -14,28 +14,29 @@ const Wrapper = styled.section`
     width: 100%;
     max-width: 900px;
     background-color: white;
-    border-radius: 0.375rem;
-    padding: 1.5rem;
+    border-radius: 6px;
+    padding: 24px;
     box-sizing: border-box;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
 
   .update-product-box h2 {
-    margin-bottom: 1.5rem;
-    font-weight: 700;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
     color: #174e4f;
   }
 
   .form-columns {
     display: flex;
-    gap: 1.5rem;
+    gap: 24px;
   }
 
   .left-column {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
     padding-right: 20px;
     border-right: 1px solid rgba(23, 78, 79, 0.15);
   }
@@ -44,13 +45,13 @@ const Wrapper = styled.section`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
     padding-left: 20px;
   }
 
   .form-group label {
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 4px;
     font-weight: 500;
     color: #174e4f;
   }
@@ -58,11 +59,11 @@ const Wrapper = styled.section`
   .form-group input,
   .form-group textarea {
     width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 16px; /* 1rem */
+    padding: 6px 12px;
+    font-size: 16px;
     line-height: 1.5;
     border: 1px solid #ced4da;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     box-sizing: border-box;
   }
 
@@ -70,7 +71,7 @@ const Wrapper = styled.section`
   .form-group textarea:focus {
     outline: none;
     border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
   }
 
   .form-group textarea {
@@ -79,14 +80,14 @@ const Wrapper = styled.section`
   }
 
   .submit-btn {
-    margin: 2rem auto 0 auto;
+    margin: 32px auto 0 auto;
     display: block;
     background-color: #198754;
     color: white;
     border: none;
-    padding: 0.5rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 0.25rem;
+    padding: 8px 24px;
+    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
   }

@@ -107,7 +107,7 @@ const Wrapper = styled.section`
     font-weight: 600;
     color: #174e4f;
   }
-  button {
+  .checkout-btn {
     font-size: 22px;
     padding: 10px;
 
@@ -115,9 +115,10 @@ const Wrapper = styled.section`
     background-color: #174e4f;
     color: #f3e5ce;
     font-weight: 600;
+    text-align: center;
   }
 
-  button:hover {
+  .checkout-btn:hover {
     background-color: #216b6c;
   }
 `;

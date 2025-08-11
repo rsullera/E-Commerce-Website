@@ -1,26 +1,67 @@
 import Wrapper from "../assets/wrappers/Footer";
 import logo from "../assets/images/mainlogo.svg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <Wrapper>
-      <div className="footer-logo" id="footer-section">
-        <img src={logo} alt="Kape Kalakal Logo" />
-        <p>Kape / Kalakal</p>
-      </div>
+      <Link to="/#hero-section" className="nav-link">
+        <div className="footer-logo" id="footer-section">
+          <img src={logo} alt="Kape Kalakal Logo" />
+
+          <p>Kape / Kalakal</p>
+        </div>{" "}
+      </Link>
 
       <div className="footer-section">
         <h4>Online Shops</h4>
-        <a href="#">Shopee</a>
-        <a href="#">Lazada</a>
-        <a href="#">TikTok Shop</a>
+        <a
+          href="https://shopee.ph/kapekalakal"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Shopee
+        </a>
+
+        <a
+          href="https://www.lazada.com.ph/shop/kape-kalakal"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Lazada
+        </a>
+        <a
+          href="https://www.tiktok.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TikTok Shop
+        </a>
       </div>
 
       <div className="footer-section">
         <h4>Social Media</h4>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">TikTok</a>
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+        <a
+          href="https://www.facebook.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Facebook
+        </a>
+        <a
+          href="https://www.tiktok.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TikTok
+        </a>
       </div>
 
       <div className="subscribe">

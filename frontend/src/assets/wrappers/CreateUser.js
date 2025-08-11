@@ -15,48 +15,51 @@ const Wrapper = styled.section`
   .create-user-box {
     width: 50%;
     background-color: white;
-    border-radius: 0.375rem; /* similar to bootstrap rounded */
-    padding: 1.5rem;
+    border-radius: 6px;
+    padding: 24px;
     box-sizing: border-box;
   }
 
   .create-user-box h2 {
-    margin-bottom: 1rem;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #174e4f;
   }
 
   .create-user-form-group {
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
   }
 
   .create-user-form-group label {
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 4px;
     font-weight: 500;
   }
 
   .create-user-form-group input {
     width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
+    padding: 6px 12px;
+    font-size: 16px;
     line-height: 1.5;
     border: 1px solid #ced4da;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     box-sizing: border-box;
   }
 
   .create-user-form-group input:focus {
     outline: none;
     border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
   }
 
   .create-user-submit-btn {
-    background-color: #198754; /* bootstrap success green */
+    background-color: #198754;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: 0.25rem;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
   }
 
