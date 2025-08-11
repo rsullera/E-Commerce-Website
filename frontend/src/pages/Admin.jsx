@@ -7,14 +7,14 @@ const Admin = ({ user, setUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Map sidebar items to route paths
+  // Sidebar items and paths
   const sideItems = [
     { label: "Users", path: "/admin" },
     { label: "Products", path: "/admin/products" },
     { label: "Orders", path: "/admin/order" },
   ];
 
-  // Determine active sidebar item by matching location.pathname
+  // Determine which sidebar item is active based on current path
   const activeItem =
     sideItems
       .slice()
@@ -36,7 +36,7 @@ const Admin = ({ user, setUser }) => {
       <section className="admin-section left">
         <div className="admin-sidebar">
           <div className="admin-info">
-            <img src={coffee} alt="" className="admin-img" />
+            <img src={coffee} alt="Admin" className="admin-img" />
             <div>
               <label>{user?.username || "Admin"}</label>
               <br />
@@ -57,10 +57,8 @@ const Admin = ({ user, setUser }) => {
               </p>
             ))}
           </div>
-          <button className="sidebar-signout">
-            <Link to="/login" onClick={handleLogout} className="dropdown-item">
-              Sign Out
-            </Link>
+          <button className="sidebar-signout" onClick={handleLogout}>
+            Sign Out
           </button>
         </div>
 
@@ -70,7 +68,7 @@ const Admin = ({ user, setUser }) => {
             <label>Welcome {user?.username || "Admin"}</label>
           </div>
 
-          {/* This is where nested routes render */}
+          {/* Outlet renders nested routes here */}
           <div className="admin-content">
             <Outlet />
           </div>

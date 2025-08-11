@@ -1,6 +1,7 @@
 import React from "react";
 import Wrapper from "../assets/wrappers/Cart";
 import coffee from "../assets/images/cofff.webp";
+import { Link } from "react-router-dom";
 
 function Cart() {
   return (
@@ -173,7 +174,9 @@ function Cart() {
               <label className="summary-total">Total</label>
               <label className="summary-total">$60</label>
             </div>
-            <button>Check Out</button>
+            <Link to="/checkout" className="checkout-btn">
+              <button>Check Out</button>
+            </Link>
           </div>
         </div>
       </section>

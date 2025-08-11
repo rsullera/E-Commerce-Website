@@ -1,46 +1,50 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Wrapper from "../../assets/wrappers/Users";
+import Wrapper from "../../assets/wrappers/Products";
 
 function Products() {
-  const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+  const productsPerPage = 5;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://localhost:5000/api/users", {
+      .get("http://localhost:5000/api/products", {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setUsers(res.data))
+      .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));
   }, []);
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
 
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`, {
+      await axios.delete(`http://localhost:5000/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+      setProducts((prev) => prev.filter((product) => product._id !== id));
     } catch (err) {
-      console.error("Error deleting user:", err);
-      alert("Failed to delete user.");
+      console.error("Error deleting product:", err);
+      alert("Failed to delete product.");
     }
   };
 
   // Pagination calculations
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(users.length / usersPerPage);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  const totalPages = Math.ceil(products.length / productsPerPage);
 
   const renderPagination = () => {
     const pages = [];
@@ -66,8 +70,8 @@ function Products() {
       <div className="page-container">
         <div className="card">
           <div className="users-dashboard">
-            <h2>Users Dashboard</h2>
-            <Link to="/admin/create" className="btn-add">
+            <h2>Products Dashboard</h2>
+            <Link to="/admin/products/create" className="btn-add">
               Add +
             </Link>
           </div>
@@ -75,36 +79,38 @@ function Products() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Stock</th>
                 <th>Date</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {currentUsers.length === 0 ? (
+              {currentProducts.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center">
-                    No users found.
+                  <td colSpan="6" className="text-center">
+                    No products found.
                   </td>
                 </tr>
               ) : (
-                currentUsers.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                currentProducts.map((product) => (
+                  <tr key={product._id}>
+                    <td>{product.name}</td>
+                    <td>${product.price}</td>
+                    <td>{product.category}</td>
+                    <td>{product.stock}</td>
+                    <td>{new Date(product.date).toLocaleDateString()}</td>
                     <td>
                       <Link
-                        to={`/admin/update/${user._id}`}
+                        to={`/admin/products/update/${product._id}`}
                         className="btn-update"
                       >
                         Update
                       </Link>
                       <button
                         className="btn-delete"
-                        onClick={() => handleDelete(user._id)}
+                        onClick={() => handleDelete(product._id)}
                       >
                         Delete
                       </button>

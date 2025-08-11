@@ -14,13 +14,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Admin from "./pages/Admin";
+import ProductDetails from "./pages/ProductDetails";
+
+import Cart from "./pages/Cart";
+import Order from "./pages/Orders/Order";
+import CheckOut from "./pages/CheckOut";
+
 import Users from "./pages/admin/Users";
 import CreateUser from "./pages/admin/CreateUser";
 import UpdateUser from "./pages/admin/UpdateUser";
-import Cart from "./pages/Cart";
+
 import Products from "./pages/products/Products";
-import Order from "./pages/Orders/Order";
-import CheckOut from "./pages/CheckOut";
+import CreateProducts from "./pages/products/CreateProducts";
+import UpdateProducts from "./pages/products/UpdateProducts";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -68,15 +74,16 @@ function AppContent({ user, setUser, error }) {
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/productdetails" element={<ProductDetails />} />
 
         {/* Admin page without Navbar/Footer */}
         <Route path="/admin" element={<Admin user={user} setUser={setUser} />}>
-          <Route index element={<Users />} /> {/* /admin */}
-          <Route path="create" element={<CreateUser />} /> {/* /admin/create */}
+          <Route index element={<Users />} />
+          <Route path="create" element={<CreateUser />} />
           <Route path="update/:id" element={<UpdateUser />} />
-          {/* /admin/update/:id */}
-          {/* Add Products, Orders nested routes here too if needed */}
           <Route path="products" element={<Products />} />
+          <Route path="products/create" element={<CreateProducts />} />
+          <Route path="products/update/:id" element={<UpdateProducts />} />
           <Route path="order" element={<Order />} />
         </Route>
       </Routes>
