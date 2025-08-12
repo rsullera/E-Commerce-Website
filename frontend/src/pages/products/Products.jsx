@@ -83,6 +83,7 @@ function Products() {
                 <th>Price</th>
                 <th>Category</th>
                 <th>Stock</th>
+                <th>Image</th>
                 <th>Date</th>
                 <th>Action</th>
               </tr>
@@ -101,6 +102,17 @@ function Products() {
                     <td>${product.price}</td>
                     <td>{product.category}</td>
                     <td>{product.stock}</td>
+                    <td>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        style={{
+                          height: "40px",
+                          width: "40px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </td>
                     <td>{new Date(product.date).toLocaleDateString()}</td>
                     <td>
                       <Link

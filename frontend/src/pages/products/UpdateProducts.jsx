@@ -14,6 +14,7 @@ function UpdateProduct() {
     stock: 0,
   });
 
+  const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,20 +28,67 @@ function UpdateProduct() {
   }, [id]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setImageFile(files[0]);
+    } else if (type === "number") {
+      setFormData({ ...formData, [name]: Number(value) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const uploadImageToCloudinary = async () => {
+    if (!imageFile) return formData.image; // No new file, keep old image URL
+
+    const data = new FormData();
+    data.append("file", imageFile);
+    data.append("upload_preset", "E-Commerce-Website"); // Your Cloudinary upload preset
+
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/da9zx5zbi/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const cloudData = await res.json();
+      return cloudData.secure_url;
+    } catch (error) {
+      console.error("Cloudinary upload failed", error);
+      return formData.image; // fallback to old image URL if upload fails
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("You must be logged in to update a product.");
+      navigate("/login");
+      return;
+    }
+
     try {
-      await axios.put(`http://localhost:5000/api/products/${id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const imageUrl = await uploadImageToCloudinary();
+
+      const updatedProductData = { ...formData, image: imageUrl };
+
+      await axios.put(
+        `http://localhost:5000/api/products/${id}`,
+        updatedProductData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
       alert("✅ Product updated successfully!");
       navigate("/admin/products");
     } catch (err) {
       console.error(err);
+      alert("Failed to update product. Please try again.");
     }
   };
 
@@ -61,6 +109,7 @@ function UpdateProduct() {
                     required
                   />
                 </div>
+
                 <div className="form-group">
                   <label>Price</label>
                   <input
@@ -71,6 +120,7 @@ function UpdateProduct() {
                     required
                   />
                 </div>
+
                 <div className="form-group">
                   <label>Category</label>
                   <input
@@ -79,14 +129,31 @@ function UpdateProduct() {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="form-group">
-                  <label>Image URL</label>
+                  <label>Image</label>
                   <input
+                    type="file"
                     name="image"
-                    value={formData.image}
                     onChange={handleChange}
+                    accept="image/*"
                   />
+                  {/* Image preview */}
+                  {imageFile ? (
+                    <img
+                      src={URL.createObjectURL(imageFile)}
+                      alt="Preview"
+                      style={{ maxWidth: "40px", marginTop: "10px" }}
+                    />
+                  ) : formData.image ? (
+                    <img
+                      src={formData.image}
+                      alt="Current"
+                      style={{ maxWidth: "40px", marginTop: "10px" }}
+                    />
+                  ) : null}
                 </div>
+
                 <div className="form-group">
                   <label>Stock</label>
                   <input

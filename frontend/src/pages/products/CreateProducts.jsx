@@ -12,11 +12,40 @@ function CreateProduct() {
     image: "",
     stock: 0,
   });
-
+  const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setImageFile(files[0]);
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const uploadImageToCloudinary = async () => {
+    if (!imageFile) return "";
+    const data = new FormData();
+    data.append("file", imageFile);
+    data.append("upload_preset", "E-Commerce-Website"); // replace with Cloudinary upload preset
+    data.append("cloud_name", "da9zx5zbi"); // replace with your Cloudinary cloud name
+    data.append("folder", "E-Commerce-website");
+
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/da9zx5zbi/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const cloudData = await res.json();
+      return cloudData.secure_url; // The hosted image URL
+    } catch (err) {
+      console.error("Cloudinary upload failed", err);
+      return "";
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -30,9 +59,20 @@ function CreateProduct() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/products", formData, {
+      // 1. Upload image to Cloudinary
+      const imageUrl = await uploadImageToCloudinary();
+      if (!imageUrl) {
+        alert("Image upload failed.");
+        return;
+      }
+
+      // 2. Send product data to backend with Cloudinary image URL
+      const productData = { ...formData, image: imageUrl };
+
+      await axios.post("http://localhost:5000/api/products", productData, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       alert("✅ Product created successfully!");
       navigate("/admin/products");
     } catch (err) {
@@ -77,11 +117,13 @@ function CreateProduct() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Image Url</label>
+                  <label>Image</label>
                   <input
+                    type="file"
                     name="image"
-                    value={formData.image}
                     onChange={handleChange}
+                    accept="image/*"
+                    required
                   />
                 </div>
                 <div className="form-group">
