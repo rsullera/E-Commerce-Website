@@ -22,7 +22,7 @@ function CreateUser() {
         date,
       })
       .then((result) => {
-        alert("Account successfully created!");
+        alert("✅ Account successfully created!");
         console.log(result);
         navigate("/admin");
       })

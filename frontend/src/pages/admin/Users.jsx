@@ -30,6 +30,7 @@ function Users() {
       });
 
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+      alert("✅ User deleted successfully!");
     } catch (err) {
       console.error("Error deleting user:", err);
       alert("Failed to delete user.");

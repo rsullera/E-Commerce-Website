@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import {
   Navbar,
@@ -24,6 +25,7 @@ import {
   UpdateProducts,
 } from "./pages";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -62,7 +64,17 @@ function AppContent({ user, setUser, error }) {
     <>
       {!hideLayout && <Navbar user={user} setUser={setUser} />}
       <Routes>
-        <Route path="/" element={<Home user={user} error={error} />} />
+        <Route
+          path="/"
+          element={
+            user && user.role === "admin" ? (
+              <Navigate to="/admin" replace />
+            ) : (
+              <Home user={user} error={error} />
+            )
+          }
+        />
+
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/register" element={<Register setUser={setUser} />} />
         <Route path="/users" element={<Users />} />
@@ -73,8 +85,16 @@ function AppContent({ user, setUser, error }) {
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/productdetails" element={<ProductDetails />} />
 
-        {/* Admin page without Navbar/Footer */}
-        <Route path="/admin" element={<Admin user={user} setUser={setUser} />}>
+        <Route
+          path="/admin/*"
+          element={
+            user && user.role === "admin" ? (
+              <Admin user={user} setUser={setUser} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        >
           <Route index element={<Users />} />
           <Route path="create" element={<CreateUser />} />
           <Route path="update/:id" element={<UpdateUser />} />

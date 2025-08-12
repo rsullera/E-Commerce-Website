@@ -36,7 +36,7 @@ function UpdateUser() {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((result) => {
-        alert("Account successfully Updated!");
+        alert("✅ Account successfully Updated!");
         console.log(result);
         navigate("/admin");
       })

@@ -31,6 +31,7 @@ function Products() {
       });
 
       setProducts((prev) => prev.filter((product) => product._id !== id));
+      alert("✅ Product deleted successfully!");
     } catch (err) {
       console.error("Error deleting product:", err);
       alert("Failed to delete product.");

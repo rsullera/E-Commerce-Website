@@ -37,6 +37,7 @@ function UpdateProduct() {
       await axios.put(`http://localhost:5000/api/products/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      alert("✅ Product updated successfully!");
       navigate("/admin/products");
     } catch (err) {
       console.error(err);

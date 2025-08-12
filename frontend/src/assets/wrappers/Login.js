@@ -74,6 +74,10 @@ const Wrapper = styled.section`
     display: inline-block;
     height: auto;
     width: 100%;
+    cursor: pointer;
+  }
+  .login-btn-btn:hover {
+    background-color: #216b6c;
   }
 
   .login-account {

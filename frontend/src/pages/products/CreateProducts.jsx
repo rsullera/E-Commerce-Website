@@ -33,6 +33,7 @@ function CreateProduct() {
       await axios.post("http://localhost:5000/api/products", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      alert("✅ Product created successfully!");
       navigate("/admin/products");
     } catch (err) {
       console.error(err);
