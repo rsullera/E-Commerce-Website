@@ -59,7 +59,7 @@ const Wrapper = styled.section`
   .card-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 columns */
-    gap: 20px;
+    gap: 30px;
     margin: 30px;
   }
 
@@ -79,33 +79,53 @@ const Wrapper = styled.section`
     color: #fff;
     border: 1px solid #174e4f;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-top: 20px;
   }
 
   .card-header {
+    font-size: 26px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #f3e5ce;
     border: none;
+    font-family: "Playfair Display";
+    padding-left: 10px;
   }
 
   .price {
     background-color: #f3e5ce;
     color: #174e4f;
     padding: 14px;
+    border: 2px solid #174e4f;
+    width: 100px;
     border-radius: 50%;
     font-weight: bold;
     font-size: 26px;
+    text-align: center;
+    position: absolute;
+    right: -20px;
+    top: -20px;
   }
 
   .image-container {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     overflow: hidden;
     border: 6px solid #f3e5ce;
     margin-top: 5px;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    /*  display: flex;
+    justify-content: center;
+    align-items: center; */
+    /*  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1); */
+  }
+  .image-container:hover {
+    transform: scale(1.1);
   }
 
   .image-container img {
@@ -118,6 +138,7 @@ const Wrapper = styled.section`
     background-color: #174e4f;
     color: #f3e5ce;
     border: none;
+    margin: 20px;
     padding: 10px 28px;
     border-radius: 12px;
     font-size: 16px;

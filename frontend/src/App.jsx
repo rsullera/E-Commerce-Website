@@ -83,7 +83,7 @@ function AppContent({ user, setUser, error }) {
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckOut />} />
-        <Route path="/productdetails" element={<ProductDetails />} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
 
         <Route
           path="/admin/*"

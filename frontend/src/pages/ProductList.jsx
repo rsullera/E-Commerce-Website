@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "../assets/wrappers/ProductList";
-
+import { Link } from "react-router-dom";
 import banner from "../assets/images/banner1.jpg";
-import coffee from "../assets/images/cofff.webp";
+import axios from "axios";
 
 function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error("Error fetching products:", err));
+  }, []);
+
   return (
     <Wrapper>
       <section className="product-section" id="product-section">
         <div className="product-content">
+          {/* Banner */}
           <div
             className="product-banner"
             style={{ backgroundImage: `url(${banner})` }}
@@ -20,6 +30,7 @@ function ProductList() {
           </div>
 
           <div className="product-info">
+            {/* Sidebar */}
             <div className="product-sidebar">
               <div className="product-searchbar">
                 <input
@@ -47,10 +58,11 @@ function ProductList() {
                 </ul>
               </div>
             </div>
+
+            {/* Product list */}
             <div className="product-list">
               <div className="product-header">
-                <p className="product-category">Product Category</p>
-
+                <p className="product-category">All Products</p>
                 <select className="sort-dropdown">
                   <option value="">Sort by</option>
                   <option value="price-low-high">Price: Low to High</option>
@@ -61,80 +73,24 @@ function ProductList() {
               </div>
 
               <div className="card-container">
-                <div className="card">
-                  <div className="card-header">
-                    <h3>Product Title</h3>
-                    <span className="price">$20</span>
-                  </div>
-
-                  <div className="image-container">
-                    <img src={coffee} alt="coffee" />
-                  </div>
-
-                  <button className="add-to-cart">Add to cart</button>
-                </div>
-
-                <div className="card">
-                  <div className="card-header">
-                    <h3>Product Title</h3>
-                    <span className="price">$20</span>
-                  </div>
-
-                  <div className="image-container">
-                    <img src={coffee} alt="coffee" />
-                  </div>
-
-                  <button className="add-to-cart">Add to cart</button>
-                </div>
-
-                <div className="card">
-                  <div className="card-header">
-                    <h3>Product Title</h3>
-                    <span className="price">$20</span>
-                  </div>
-
-                  <div className="image-container">
-                    <img src={coffee} alt="coffee" />
-                  </div>
-
-                  <button className="add-to-cart">Add to cart</button>
-                </div>
-                <div className="card">
-                  <div className="card-header">
-                    <h3>Product Title</h3>
-                    <span className="price">$20</span>
-                  </div>
-
-                  <div className="image-container">
-                    <img src={coffee} alt="coffee" />
-                  </div>
-
-                  <button className="add-to-cart">Add to cart</button>
-                </div>
-                <div className="card">
-                  <div className="card-header">
-                    <h3>Product Title</h3>
-                    <span className="price">$20</span>
-                  </div>
-
-                  <div className="image-container">
-                    <img src={coffee} alt="coffee" />
-                  </div>
-
-                  <button className="add-to-cart">Add to cart</button>
-                </div>
-                <div className="card">
-                  <div className="card-header">
-                    <h3>Product Title</h3>
-                    <span className="price">$20</span>
-                  </div>
-
-                  <div className="image-container">
-                    <img src={coffee} alt="coffee" />
-                  </div>
-
-                  <button className="add-to-cart">Add to cart</button>
-                </div>
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <div className="card" key={product._id}>
+                      <div className="card-header">
+                        <h3>{product.name}</h3>
+                        <span className="price">₱{product.price}</span>
+                      </div>
+                      <Link to={`/productdetails/${product._id}`}>
+                        <div className="image-container">
+                          <img src={product.image} alt={product.name} />
+                        </div>
+                      </Link>
+                      <button className="add-to-cart">Add to cart</button>
+                    </div>
+                  ))
+                ) : (
+                  <p>No products available</p>
+                )}
               </div>
             </div>
           </div>

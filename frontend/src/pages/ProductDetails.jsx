@@ -1,32 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import Wrapper from "../assets/wrappers/ProductDetails";
-import coffee from "../assets/images/product1.webp";
 
 function ProductDetails() {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/products/${id}`)
+      .then((res) => setProduct(res.data))
+      .catch((err) => console.error("Error fetching product:", err));
+  }, [id]);
+
+  if (!product) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Wrapper>
       <div className="product-page">
+        {/* Image Section */}
         <div className="product-bg left">
-          <div className="product-bg-bg">
-            <img src={coffee} alt="" className="product" />
+          <div className="sub-container">
+            <div className="sub-bg">
+              <img src={product.image} alt={product.name} className="sub-img" />
+            </div>
+            <div className="sub-bg">
+              <img src={product.image} alt={product.name} className="sub-img" />
+            </div>
+            <div className="sub-bg">
+              <img src={product.image} alt={product.name} className="sub-img" />
+            </div>
+          </div>
+          <div className="main-bg">
+            <img src={product.image} alt={product.name} className="main-img" />
           </div>
         </div>
 
+        {/* Info Section */}
         <div className="product-info right">
-          <p className="product-title">Product Title</p>
-          <p className="product-category">Category</p>
-          <p className="product-price">Price</p>
-          <p className="product-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste animi
-            suscipit vero ad ducimus nisi nostrum asperiores. Quia animi minus a
-            fugit illo dolores earum assumenda amet repellat reprehenderit,
-            totam nisi fuga debitis ipsa quasi perferendis et tempore!
-            Necessitatibus, tenetur.
+          <p className="product-title">{product.name}</p>
+          <p className="product-category">{product.category}</p>
+          <p className="product-price">₱{product.price}</p>
+          <p className="product-description">{product.description}</p>
+          <p className="product-stock">Stock: {product.stock}</p>
+          <p className="product-stock">
+            Quantity: <input type="number" min="1" max={product.stock} />
           </p>
-          <p className="product-stock">Stock:</p>
-          <p className="product-quantity">Qty:</p>
           <div className="product-btn">
-            <button>Add to Cart</button> <button>Buy Now</button>
+            <button>Add to Cart</button>
+            <button>Buy Now</button>
           </div>
         </div>
       </div>

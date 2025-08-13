@@ -51,7 +51,7 @@ const Wrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding-left: 20px;
+    /*  padding-left: 20px; */
   }
 
   .form-group label {
