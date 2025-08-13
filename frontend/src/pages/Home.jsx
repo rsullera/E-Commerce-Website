@@ -119,7 +119,7 @@ const Home = ({ user, error }) => {
             Grab Upto 50% Off on <br />
             Selected Coffee
           </p>{" "}
-          <Link to="/product#product-section" className="nav-link">
+          <Link to="/productlist#product-section" className="nav-link">
             <div className="off-btn">
               <button className="off-btn-btn">Buy Now</button>
             </div>
