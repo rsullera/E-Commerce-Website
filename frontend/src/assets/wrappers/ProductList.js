@@ -48,13 +48,16 @@ const Wrapper = styled.section`
   }
 
   .sort-dropdown {
-    font-size: 20px;
+    font-size: 16px;
     padding: 5px 10px;
     border: 1px solid #174e4f;
     border-radius: 4px;
     color: #174e4f;
     background-color: #f3e5ce;
     margin-bottom: 15px;
+    font-family: "Roboto";
+    /*   position: absolute;
+    right: 30px; */
   }
   .card-container {
     display: grid;
@@ -93,6 +96,7 @@ const Wrapper = styled.section`
     right: -20px;
     top: -20px;
     width: auto;
+    font-family: "Roboto";
   }
 
   .category {
@@ -158,6 +162,7 @@ const Wrapper = styled.section`
   .product-sidebar {
     height: auto;
     min-width: 290px;
+    width: 290px;
     border-right: 2px solid #174e4f;
   }
   .product-searchbar {
@@ -183,6 +188,9 @@ const Wrapper = styled.section`
     font-weight: bold;
     margin-bottom: 10px;
     font-size: 26px;
+  }
+  hr {
+    margin: 10px;
   }
 
   .category-list {
@@ -211,12 +219,9 @@ const Wrapper = styled.section`
   }
 
   .category-button {
-    background: none;
-    border: none;
-    padding: 8px 12px;
     cursor: pointer;
     text-align: left;
-    width: 100%;
+
     transition: all 0.2s ease;
   }
 
@@ -226,7 +231,7 @@ const Wrapper = styled.section`
 
   .category-button.active {
     background-color: #174e4f;
-    color: white;
+    color: #f3e5ce;
     font-weight: bold;
   }
 
@@ -262,7 +267,7 @@ const Wrapper = styled.section`
     padding: 14px;
     border: 1px solid #f3e5ce;
     min-width: 100px;
-
+    font-family: "Roboto";
     border-radius: 50%;
 
     font-weight: bold;
@@ -336,16 +341,23 @@ const Wrapper = styled.section`
     margin-bottom: 10px;
     font-size: 18px;
   }
+  .stock {
+    font-family: "Roboto";
+  }
   .modal-input {
-    width: 40px;
+    width: 60px;
     text-align: center;
     font-size: 18px;
     border: 1px solid #174e4f;
     margin-left: 5px;
     border-radius: 4px;
+    font-family: "Roboto";
+    line-height: 20px;
   }
   .modal-description {
     font-size: 16px;
+    /*  font-weight: 600; */
+    /*  letter-spacing: 1px; */
   }
   .view-more {
     margin-top: 10px;
@@ -361,6 +373,8 @@ const Wrapper = styled.section`
     justify-content: space-between;
     margin-top: 20px;
     gap: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
   }
   .modal-btn {
     padding: 10px;

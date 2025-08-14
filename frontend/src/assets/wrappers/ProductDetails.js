@@ -24,7 +24,7 @@ const Wrapper = styled.main`
     height: 80vh;
     width: 60%;
     padding-top: 35px;
-   /*  border: 2px solid red; */
+    /*  border: 2px solid red; */
   }
 
   .product-bg {
@@ -42,7 +42,8 @@ const Wrapper = styled.main`
   .main-img {
     height: 530px;
     width: 450px;
-    border: 4px solid #1f4f4f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /*  border: 4px solid #1f4f4f; */
     transition: transform 0.3s ease;
   }
 
@@ -58,7 +59,8 @@ const Wrapper = styled.main`
   }
 
   .sub-img {
-    border: 4px solid #1f4f4f;
+    /*   border: 4px solid #1f4f4f; */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     height: 100px;
     width: 100px;
     transition: transform 0.3s ease;
@@ -85,34 +87,36 @@ const Wrapper = styled.main`
   }
   .product-description {
     font-size: 22px;
-    margin-bottom: 20px;
+    /*   margin-bottom: 20px; */
     height: auto;
   }
   .product-stock {
     font-size: 26px;
-    padding-top:20px;
+    padding-top: 20px;
   }
-  input{
-    border:2px solid #1f4f4f;
-    padding-left:20px;
-    width:15%;
-    text-align:center
+  input {
+    border: 2px solid #1f4f4f;
+    padding-left: 20px;
+    width: 15%;
+    text-align: center;
   }
   .product-quantity {
     font-size: 26px;
     margin-bottom: 20px;
   }
   .product-btn {
-    position: absolute;
-display:flex;
-    bottom: 90px;
+    /* position: absolute;
+   
+    bottom: 90px; */
     /* ensures it starts from the left */
-    width: 50%; /* so flex covers full width */
+    /*    */ /* so flex covers full width */
 
-  /*   display: flex;
+    /*   display: flex;
     justify-content: center; /* or space-between / flex-end */
-    align-items: center; /* vertical centering */
-    gap: 20px; /* space between buttons */ */
+    align-items: center;
+    padding-top: 40px;
+    display: flex; /* vertical centering */
+    gap: 20px; /* space between buttons */
   }
   button {
     font-size: 36px;

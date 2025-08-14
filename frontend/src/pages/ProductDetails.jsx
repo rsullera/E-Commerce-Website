@@ -47,7 +47,8 @@ function ProductDetails() {
           <p className="product-description">{product.description}</p>
           <p className="product-stock">Stock: {product.stock}</p>
           <p className="product-stock">
-            Quantity: <input type="number" min="1" max={product.stock} />
+            Quantity:{" "}
+            <input type="number" min="1" max={product.stock} defaultValue="1" />
           </p>
           <div className="product-btn">
             <button>Add to Cart</button>

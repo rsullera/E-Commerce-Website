@@ -6,13 +6,28 @@ import { Link } from "react-router-dom";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // Store all products
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // 🔍 new state
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/products")
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        setProducts(res.data);
+        setAllProducts(res.data);
+
+        // Get unique categories
+        const uniqueCategories = [
+          "All",
+          ...new Set(res.data.map((product) => product.category)),
+        ];
+        setCategories(uniqueCategories);
+      })
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
@@ -25,7 +40,6 @@ function ProductList() {
     setIsModalOpen(false);
     setSelectedProduct(null);
   };
-  const [sortOption, setSortOption] = useState("");
 
   const handleSort = (option) => {
     setSortOption(option);
@@ -51,6 +65,49 @@ function ProductList() {
     setProducts(sortedProducts);
   };
 
+  const filterByCategory = (category) => {
+    setActiveCategory(category);
+    let filtered = allProducts;
+
+    if (category !== "All") {
+      filtered = filtered.filter((p) => p.category === category);
+    }
+
+    // Apply search filter after category filter
+    if (searchQuery.trim() !== "") {
+      filtered = filtered.filter((p) =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setProducts(filtered);
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    let filtered = allProducts;
+
+    // Filter by category first
+    if (activeCategory !== "All") {
+      filtered = filtered.filter((p) => p.category === activeCategory);
+    }
+
+    // Then filter by search query (name, category, or price)
+    if (value.trim() !== "") {
+      const lowerValue = value.toLowerCase();
+      filtered = filtered.filter(
+        (p) =>
+          p.name.toLowerCase().includes(lowerValue) ||
+          p.category.toLowerCase().includes(lowerValue) ||
+          p.price.toString().includes(lowerValue) // 🔹 match price too
+      );
+    }
+
+    setProducts(filtered);
+  };
+
   return (
     <Wrapper>
       <section className="product-section" id="product-section">
@@ -74,24 +131,31 @@ function ProductList() {
                   type="search"
                   placeholder="Search..."
                   className="searchbar"
+                  value={searchQuery}
+                  onChange={handleSearch} // 🔍 filter products while typing
                 />
               </div>
 
               <div className="product-categories">
                 <p className="category-title">Categories</p>
+                <hr />
                 <ul className="category-list">
-                  <li>
-                    <button className="category-button">Coffee</button>
-                  </li>
-                  <li>
-                    <button className="category-button">Tea</button>
-                  </li>
-                  <li>
-                    <button className="category-button">Pastries</button>
-                  </li>
-                  <li>
-                    <button className="category-button">Cold Drinks</button>
-                  </li>
+                  {categories.length > 0 ? (
+                    categories.map((category) => (
+                      <li key={category}>
+                        <button
+                          className={`category-button ${
+                            activeCategory === category ? "active" : ""
+                          }`}
+                          onClick={() => filterByCategory(category)}
+                        >
+                          {category}
+                        </button>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No categories</li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -99,7 +163,7 @@ function ProductList() {
             {/* Product list */}
             <div className="product-list">
               <div className="product-header">
-                <p className="product-category">All Products</p>
+                <p className="product-category">{activeCategory} Products</p>
                 <select
                   className="sort-dropdown"
                   value={sortOption}
@@ -154,68 +218,53 @@ function ProductList() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-left">
-              <span className="modal-price">
-                ₱{selectedProduct.price}
-                {/* PRODUCT PRICE */}
-              </span>
-
+              <span className="modal-price">₱{selectedProduct.price}</span>
               <div className="modal-img">
                 <div className="modal-img-img">
                   <Link to={`/productdetails/${selectedProduct._id}`}>
                     <img
                       src={selectedProduct.image}
                       alt={selectedProduct.name}
-                    />{" "}
-                    {/* PRODUCT IMAGE */}
+                    />
                   </Link>
                 </div>
               </div>
             </div>
             <div className="modal-right">
-              <span className="modal-name">
-                {selectedProduct.name}
-                {/* PRODUCT NAME */}
-              </span>
-
-              <span className="modal-category">
-                {selectedProduct.category}
-                {/* PRODUCT CATEGORY */}
-              </span>
+              <span className="modal-name">{selectedProduct.name}</span>
+              <span className="modal-category">{selectedProduct.category}</span>
             </div>
             <div className="modal-left-right">
               <span className="modal-stock">
-                Stock: {selectedProduct.stock}
-                {/* PRODUCT STOCK */}
+                Stock: <span className="stock">{selectedProduct.stock}</span>
               </span>
               <span className="modal-quantity">
-                Quantity:{/* PRODUCT QUANTITY */}
+                Quantity:
                 <input
                   type="number"
                   min="1"
                   defaultValue="1"
+                  max={selectedProduct.stock}
                   className="modal-input"
                 />
               </span>
             </div>
-            {/*    </div> */}
             <div className="modal-container">
               <span className="modal-description">
-                {/* PRODUCT DESCRIPTION */}
                 {selectedProduct.description.split(" ").slice(0, 15).join(" ")}
                 {selectedProduct.description.split(" ").length > 15
                   ? "..."
                   : ""}
               </span>
-            </div>{" "}
+            </div>
             <Link
               to={`/productdetails/${selectedProduct._id}`}
               className="view-more"
-              onClick={closeModal} // close modal when navigating
+              onClick={closeModal}
             >
               View More...
             </Link>
             <div className="modal-buttons">
-              {/* PRODUCT BUTTON */}
               <button className="add-to-cart-btn modal-btn">Add to Cart</button>
               <button className="buy-now-btn modal-btn">Buy Now</button>
             </div>

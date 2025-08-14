@@ -99,7 +99,7 @@ function Products() {
                 currentProducts.map((product) => (
                   <tr key={product._id}>
                     <td>{product.name}</td>
-                    <td>${product.price}</td>
+                    <td>₱{product.price}</td>
                     <td>{product.category}</td>
                     <td>{product.stock}</td>
                     <td>

@@ -15,7 +15,7 @@ const Wrapper = styled.section`
     max-width: 900px;
     background-color: white;
     border-radius: 6px;
-    padding: 24px;
+    padding: 15px 24px 15px 24px;
     box-sizing: border-box;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
@@ -80,7 +80,8 @@ const Wrapper = styled.section`
   }
 
   .submit-btn {
-    margin: 32px auto 0 auto;
+    /*  margin: 32px auto 0 auto; */
+    margin: 15px auto 0 auto;
     display: block;
     background-color: #198754;
     color: white;
