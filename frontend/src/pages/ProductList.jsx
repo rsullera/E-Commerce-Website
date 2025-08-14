@@ -25,6 +25,31 @@ function ProductList() {
     setIsModalOpen(false);
     setSelectedProduct(null);
   };
+  const [sortOption, setSortOption] = useState("");
+
+  const handleSort = (option) => {
+    setSortOption(option);
+    let sortedProducts = [...products];
+
+    switch (option) {
+      case "price-low-high":
+        sortedProducts.sort((a, b) => a.price - b.price);
+        break;
+      case "price-high-low":
+        sortedProducts.sort((a, b) => b.price - a.price);
+        break;
+      case "name-asc":
+        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "name-desc":
+        sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      default:
+        break;
+    }
+
+    setProducts(sortedProducts);
+  };
 
   return (
     <Wrapper>
@@ -75,7 +100,11 @@ function ProductList() {
             <div className="product-list">
               <div className="product-header">
                 <p className="product-category">All Products</p>
-                <select className="sort-dropdown">
+                <select
+                  className="sort-dropdown"
+                  value={sortOption}
+                  onChange={(e) => handleSort(e.target.value)}
+                >
                   <option value="">Sort by</option>
                   <option value="price-low-high">Price: Low to High</option>
                   <option value="price-high-low">Price: High to Low</option>
@@ -124,35 +153,56 @@ function ProductList() {
       {isModalOpen && selectedProduct && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-left-right">
-              <div className="modal-left">
-                <Link to={`/productdetails/${selectedProduct._id}`}>
-                  <img
-                    className="modal-img"
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                  />
-                </Link>
-              </div>
-              <div className="modal-right">
-                <span className="modal-name">{selectedProduct.name}</span>
-                <span className="modal-category">
-                  {selectedProduct.category}
-                </span>
-                <span className="modal-price">${selectedProduct.price}</span>
-                <span className="modal-stock">
-                  Stock: {selectedProduct.stock}
-                </span>
-                <span className="modal-quantity">
-                  Quantity:
-                  <input type="modal-number" min="1" defaultValue="1" />
-                </span>
+            <div className="modal-left">
+              <span className="modal-price">
+                ₱{selectedProduct.price}
+                {/* PRODUCT PRICE */}
+              </span>
+
+              <div className="modal-img">
+                <div className="modal-img-img">
+                  <Link to={`/productdetails/${selectedProduct._id}`}>
+                    <img
+                      src={selectedProduct.image}
+                      alt={selectedProduct.name}
+                    />{" "}
+                    {/* PRODUCT IMAGE */}
+                  </Link>
+                </div>
               </div>
             </div>
+            <div className="modal-right">
+              <span className="modal-name">
+                {selectedProduct.name}
+                {/* PRODUCT NAME */}
+              </span>
+
+              <span className="modal-category">
+                {selectedProduct.category}
+                {/* PRODUCT CATEGORY */}
+              </span>
+            </div>
+            <div className="modal-left-right">
+              <span className="modal-stock">
+                Stock: {selectedProduct.stock}
+                {/* PRODUCT STOCK */}
+              </span>
+              <span className="modal-quantity">
+                Quantity:{/* PRODUCT QUANTITY */}
+                <input
+                  type="number"
+                  min="1"
+                  defaultValue="1"
+                  className="modal-input"
+                />
+              </span>
+            </div>
+            {/*    </div> */}
             <div className="modal-container">
               <span className="modal-description">
-                {selectedProduct.description.split(" ").slice(0, 30).join(" ")}
-                {selectedProduct.description.split(" ").length > 30
+                {/* PRODUCT DESCRIPTION */}
+                {selectedProduct.description.split(" ").slice(0, 15).join(" ")}
+                {selectedProduct.description.split(" ").length > 15
                   ? "..."
                   : ""}
               </span>
@@ -165,6 +215,7 @@ function ProductList() {
               View More...
             </Link>
             <div className="modal-buttons">
+              {/* PRODUCT BUTTON */}
               <button className="add-to-cart-btn modal-btn">Add to Cart</button>
               <button className="buy-now-btn modal-btn">Buy Now</button>
             </div>

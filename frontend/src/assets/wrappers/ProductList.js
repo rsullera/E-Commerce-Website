@@ -77,13 +77,14 @@ const Wrapper = styled.section`
 
   .card-category {
     color: #f3e5ce;
+    padding-top: 10px;
   }
   .price {
     background-color: #f3e5ce;
     color: #174e4f;
     padding: 14px;
     border: 2px solid #174e4f;
-    width: 100px;
+    min-width: 100px;
     border-radius: 50%;
     font-weight: bold;
     font-size: 26px;
@@ -91,16 +92,18 @@ const Wrapper = styled.section`
     position: absolute;
     right: -20px;
     top: -20px;
+    width: auto;
   }
 
   .category {
     padding: 20px;
+    font-style: italic;
   }
   .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 0 10px 0;
+    padding: 20px 0 10px 0;
     transition: all 0.3s ease;
   }
 
@@ -147,88 +150,6 @@ const Wrapper = styled.section`
   .add-to-cart:hover {
     background-color: #0f3a3b;
   }
-  /* .card {
-    width: 270px;
-    height: 400px;
-    background: linear-gradient(155deg, #174e4f 55%, #f3e5ce 50%);
-    border-radius: 16px;
-    padding: 10px;
-    position: relative;
-    font-family: "Roboto";
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    color: #fff;
-    border: 1px solid #174e4f;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-  }
-
-  .card-header {
-    font-size: 26px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #174e4f;
-    border: none;
-    font-family: "Playfair Display";
-    padding-left: 10px;
-    text-align: center;
-  }
-
-  .price {
-    background-color: #f3e5ce;
-    color: #174e4f;
-    padding: 14px;
-    border: 2px solid #174e4f;
-    width: 100px;
-    border-radius: 50%;
-    font-weight: bold;
-    font-size: 26px;
-    text-align: center;
-    position: absolute;
-    right: -20px;
-    top: -20px;
-  }
-
-  .image-container {
-    min-width: 180px;
-    min-height: 180px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 6px solid #f3e5ce;
-    margin-top: 5px;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-  }
-
-  .image-container:hover {
-    transform: scale(1.1);
-  }
-
-  .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .add-to-cart {
-    background-color: #174e4f;
-    color: #f3e5ce;
-    border: none;
-    margin: 20px;
-    padding: 10px 28px;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .add-to-cart:hover {
-    background-color: #0f3a3b;
-  } */
 
   //////CARD  PRODUCT END
 
@@ -236,7 +157,7 @@ const Wrapper = styled.section`
 
   .product-sidebar {
     height: auto;
-    width: 350px;
+    min-width: 290px;
     border-right: 2px solid #174e4f;
   }
   .product-searchbar {
@@ -289,114 +210,167 @@ const Wrapper = styled.section`
     width: 100%;
   }
 
+  .category-button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: all 0.2s ease;
+  }
+
+  .category-button:hover {
+    background-color: #e2c49a;
+  }
+
+  .category-button.active {
+    background-color: #174e4f;
+    color: white;
+    font-weight: bold;
+  }
+
   //modal
+
   .modal-overlay {
     position: fixed;
-
-    background-color: pink;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999;
+    padding-top: 50px;
   }
   .modal-content {
+    width: 400px;
+    height: 500px;
+    height: auto;
     background-color: #f3e5ce;
     display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 24px;
-    max-width: 400px;
-    width: 90%;
-    height: auto;
-    border: 1px solid #174a43;
-  }
 
-  .modal-left-right {
-    display: flex;
-    gap: 10px;
+    border-radius: 16px;
+    flex-direction: column;
+    /* background: linear-gradient(165deg, #174e4f 1%, #f3e5ce 40%); */
+    background: linear-gradient(145deg, #174e4f 1%, #f3e5ce 40%);
+    padding: 30px;
+    position: relative;
+  }
+  .modal-price {
+    background-color: #174e4f;
+    color: #f3e5ce;
+    padding: 14px;
+    border: 1px solid #f3e5ce;
+    min-width: 100px;
+
+    border-radius: 50%;
+
+    font-weight: bold;
+    font-size: 26px;
+    text-align: center;
+    position: absolute;
+    right: -30px;
+    top: -20px;
+    width: auto;
   }
   .modal-left {
-    width: 40%;
-  }
-  .modal-right {
-    margin: 0;
-    padding: 0;
-    width: 60%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
   }
+
   .modal-img {
-    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 10px 0;
+    transition: all 0.3s ease;
+  }
+
+  .modal-img-img {
     height: 200px;
-    border: 2px solid #174e4f;
+    width: 200px;
+    border-radius: 50%;
+    border: 6px solid #f3e5ce;
+    overflow: hidden;
+    display: flex;
+
+    align-items: center;
+    /*  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); */
+  }
+
+  .modal-img img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal-img {
+    /*   height: 200px;
+    width: 170px;
     border-radius: 12px;
-    transition: transform 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease; */
   }
   .modal-img:hover {
     transform: scale(1.05);
   }
+  .modal-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .modal-name {
-    white-space: nowrap;
-    font-size: clamp(16px, 4vw, 36px); /* auto-resize but max 36px */
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 28px;
     font-weight: 600;
+    text-align: center;
   }
   .modal-category {
+    font-style: italic;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .modal-left-right {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
     font-size: 18px;
   }
-  .modal-price {
-    font-size: 36px;
-    font-weight: 600;
-  }
-  .modal-stock {
+  .modal-input {
+    width: 40px;
+    text-align: center;
     font-size: 18px;
-  }
-  .modal-quantity {
-    font-size: 18px;
-  }
-  .modal-number {
-    font-size: 18px;
-  }
-  input {
-    font-size: 18px;
-    width: 100px;
-    text-align: start;
-    padding-left: 20px;
-  }
-  .modal-container {
-    padding: 10px 5px 0 5px;
+    border: 1px solid #174e4f;
+    margin-left: 5px;
+    border-radius: 4px;
   }
   .modal-description {
-    font-size: 18px;
+    font-size: 16px;
   }
   .view-more {
-    margin: 5px 5px 20px 5px;
-    color: rgba(23, 78, 79, 0.7);
-    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: underline;
   }
   .view-more:hover {
     color: #216b6c;
   }
   .modal-buttons {
     display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
     gap: 20px;
   }
   .modal-btn {
-    background: transparent;
-    border: 1px solid #174a43;
-    color: #174a43;
-    padding: 10px 24px;
-    font-size: 16px;
-    font-family: inherit;
+    padding: 10px;
+    width: 50%;
+    border: 2px solid #174e4f;
     cursor: pointer;
     transition: 0.3s ease;
-    width: 50%;
-    border-radius: 12px;
+    border-radius: 8px;
   }
+
   .modal-btn:first-child:hover {
     background-color: #e2c49a;
   }
