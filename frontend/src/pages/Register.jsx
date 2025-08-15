@@ -46,7 +46,7 @@ function Register({ setUser }) {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                placeholder="mamamo21"
+                placeholder="Username"
                 required
               />
 
@@ -65,7 +65,7 @@ function Register({ setUser }) {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Mamamobentesais"
+                placeholder="Password"
                 required
               />
               {error && <p className="error">{error}</p>}

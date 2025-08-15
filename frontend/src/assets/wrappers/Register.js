@@ -22,6 +22,7 @@ const Wrapper = styled.section`
     background-color: #f3e5ce;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-radius: 12px;
   }
   .login-welcome {
     font-size: 36px;

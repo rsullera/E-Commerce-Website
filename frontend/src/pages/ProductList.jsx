@@ -265,7 +265,10 @@ function ProductList() {
               View More...
             </Link>
             <div className="modal-buttons">
-              <button className="add-to-cart-btn modal-btn">Add to Cart</button>
+              <button className="add-to-cart-btn modal-btn">
+                {" "}
+                <Link to="/cart">Add to Cart</Link>
+              </button>
               <button className="buy-now-btn modal-btn">Buy Now</button>
             </div>
           </div>

@@ -70,7 +70,7 @@ function Login({ setUser }) {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Mamamobentesais"
+                placeholder="Passsword"
                 required
               />
               {error && <p className="error">{error}</p>}

@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     }
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "User Alreadyexists" });
+      return res.status(400).json({ message: "User Already exists" });
     }
 
     const user = await User.create({ username, email, password });
@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
       token,
     });
   } catch (err) {
-    res.status(500).json({ message: "server error ngani" });
+    res.status(500).json({ message: "server error!" });
   }
 });
 
@@ -42,9 +42,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user || !(await user.matchPassword(password))) {
-      return res
-        .status(401)
-        .json({ message: "Invalid credentials bobo mo mag type" });
+      return res.status(401).json({ message: "Invalid credentials!" });
     }
     const token = generateToken(user._id);
     res.status(200).json({
@@ -55,7 +53,7 @@ router.post("/login", async (req, res) => {
       token,
     });
   } catch (err) {
-    res.status(500).json({ message: "server error daw" });
+    res.status(500).json({ message: "server error!" });
   }
 });
 

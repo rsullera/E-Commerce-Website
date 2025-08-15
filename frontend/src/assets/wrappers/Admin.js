@@ -81,15 +81,15 @@ const Wrapper = styled.section`
   }
 
   .admin-dashboard {
-    flex: 1; /* take all remaining width next to sidebar */
+    flex: 1;
     background-color: #f3e5ce;
     padding: 20px;
   }
 
   .admin-welcome {
     display: flex;
-    justify-content: space-between; /* left & right */
-    align-items: center; /* vertical alignment */
+    justify-content: space-between;
+    align-items: center;
     background-color: #174e4f;
     color: #f3e5ce;
     padding: 20px 20px;

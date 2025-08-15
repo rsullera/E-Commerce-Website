@@ -345,11 +345,11 @@ const Wrapper = styled.section`
     font-family: "Roboto";
   }
   .modal-input {
-    width: 60px;
+    width: 50px;
     text-align: center;
     font-size: 18px;
-    border: 1px solid #174e4f;
-    margin-left: 5px;
+    /*  border: 1px solid #174e4f; */
+    margin-left: 1px;
     border-radius: 4px;
     font-family: "Roboto";
     line-height: 20px;
