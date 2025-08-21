@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import Wrapper from "../assets/wrappers/ProductList";
 import banner from "../assets/images/banner1.jpg";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-  const [allProducts, setAllProducts] = useState([]); // Store all products
+  const [allProducts, setAllProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState("");
-  const [searchQuery, setSearchQuery] = useState(""); // 🔍 new state
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { addToCart } = useCart(); // ✅ get addToCart function
+  const navigate = useNavigate(); // ✅ for redirect
 
   useEffect(() => {
     axios
@@ -21,7 +25,6 @@ function ProductList() {
         setProducts(res.data);
         setAllProducts(res.data);
 
-        // Get unique categories
         const uniqueCategories = [
           "All",
           ...new Set(res.data.map((product) => product.category)),
@@ -73,7 +76,6 @@ function ProductList() {
       filtered = filtered.filter((p) => p.category === category);
     }
 
-    // Apply search filter after category filter
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((p) =>
         p.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -89,23 +91,27 @@ function ProductList() {
 
     let filtered = allProducts;
 
-    // Filter by category first
     if (activeCategory !== "All") {
       filtered = filtered.filter((p) => p.category === activeCategory);
     }
 
-    // Then filter by search query (name, category, or price)
     if (value.trim() !== "") {
       const lowerValue = value.toLowerCase();
       filtered = filtered.filter(
         (p) =>
           p.name.toLowerCase().includes(lowerValue) ||
           p.category.toLowerCase().includes(lowerValue) ||
-          p.price.toString().includes(lowerValue) // 🔹 match price too
+          p.price.toString().includes(lowerValue)
       );
     }
 
     setProducts(filtered);
+  };
+
+  // ✅ New: Add product then navigate to cart
+  const handleAddToCart = (product) => {
+    addToCart(product, 1);
+    navigate("/cart");
   };
 
   return (
@@ -132,7 +138,7 @@ function ProductList() {
                   placeholder="Search..."
                   className="searchbar"
                   value={searchQuery}
-                  onChange={handleSearch} // 🔍 filter products while typing
+                  onChange={handleSearch}
                 />
               </div>
 
@@ -199,9 +205,17 @@ function ProductList() {
                       <div className="card-header">
                         <h3>{product.name}</h3>
                       </div>
-                      <Link to="/cart">
-                        <button className="add-to-cart">Add to cart</button>
-                      </Link>
+
+                      {/* ✅ Fixed button */}
+                      <button
+                        className="add-to-cart"
+                        onClick={(e) => {
+                          e.stopPropagation(); // prevent modal open
+                          handleAddToCart(product);
+                        }}
+                      >
+                        Add to cart
+                      </button>
                     </div>
                   ))
                 ) : (
@@ -265,9 +279,12 @@ function ProductList() {
               View More...
             </Link>
             <div className="modal-buttons">
-              <button className="add-to-cart-btn modal-btn">
-                {" "}
-                <Link to="/cart">Add to Cart</Link>
+              {/* ✅ Fixed: Add to Cart works */}
+              <button
+                className="add-to-cart-btn modal-btn"
+                onClick={() => handleAddToCart(selectedProduct)}
+              >
+                Add to Cart
               </button>
               <button className="buy-now-btn modal-btn">Buy Now</button>
             </div>

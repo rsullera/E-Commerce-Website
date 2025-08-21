@@ -6,7 +6,7 @@ const Wrapper = styled.section`
   font-family: "Playfair Display";
 
   .cart {
-    height: auto;
+    height: 100vh;
     display: flex;
   }
   .cart-section {

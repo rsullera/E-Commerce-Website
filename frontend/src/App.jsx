@@ -26,6 +26,7 @@ import {
 } from "./pages";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -50,9 +51,11 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <AppContent user={user} setUser={setUser} error={error} />
-    </Router>
+    <CartProvider user={user}>
+      <Router>
+        <AppContent user={user} setUser={setUser} error={error} />
+      </Router>
+    </CartProvider>
   );
 }
 
@@ -85,6 +88,7 @@ function AppContent({ user, setUser, error }) {
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/productdetails/:id" element={<ProductDetails />} />
 
+        {/* ✅ Admin protected routes */}
         <Route
           path="/admin/*"
           element={

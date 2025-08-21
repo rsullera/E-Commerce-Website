@@ -3,16 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import Wrapper from "../assets/wrappers/Navbar";
 import logo from "../assets/images/mainlogo.svg";
+import { useCart } from "../context/CartContext";
 
 const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
-  console.log(1, user);
+  const { cartItems } = useCart();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
     navigate("/login");
   };
+
+  // ✅ total quantity of items
+  const totalItems = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <Wrapper>
@@ -51,8 +58,30 @@ const Navbar = ({ user, setUser }) => {
               </>
             ) : (
               <div className="user-info">
-                <Link to="/cart" className="cart-icon">
-                  <FaShoppingCart />
+                <Link
+                  to="/cart"
+                  className="cart-icon"
+                  style={{ position: "relative" }}
+                >
+                  <FaShoppingCart size={24} />
+                  {totalItems > 0 && (
+                    <span
+                      className="cart-count"
+                      style={{
+                        position: "absolute",
+                        top: "-8px",
+                        right: "-8px",
+                        background: "red",
+                        color: "white",
+                        borderRadius: "50%",
+                        padding: "2px 6px",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {totalItems}
+                    </span>
+                  )}
                 </Link>
                 <span className="welcome">Welcome,&nbsp;</span>
                 <div className="dropdown">
