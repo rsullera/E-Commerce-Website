@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Wrapper from "../assets/wrappers/ProductDetails";
+import { useCart } from "../context/CartContext"; // ✅ import cart context
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1); // ✅ track quantity
+  const { addToCart } = useCart(); // ✅ get addToCart function
 
   useEffect(() => {
     axios
@@ -17,6 +20,11 @@ function ProductDetails() {
   if (!product) {
     return <p>Loading...</p>;
   }
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity); // add the product with selected quantity
+    alert(`${product.name} added to cart!`);
+  };
 
   return (
     <Wrapper>
@@ -48,10 +56,16 @@ function ProductDetails() {
           <p className="product-stock">Stock: {product.stock}</p>
           <p className="product-stock">
             Quantity:{" "}
-            <input type="number" min="1" max={product.stock} defaultValue="1" />
+            <input
+              type="number"
+              min="1"
+              max={product.stock}
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            />
           </p>
           <div className="product-btn">
-            <button>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
             <button>Buy Now</button>
           </div>
         </div>

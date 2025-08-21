@@ -1,53 +1,154 @@
-import React from "react";
+import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/CheckOut";
+import { useCart } from "../context/CartContext";
 
 function CheckOut() {
+  const { cartItems } = useCart();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState(""); // COD or PayPal
+
+  // Calculate subtotal
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  const vat = subtotal * 0.12; // 12% VAT
+  const total = subtotal + vat;
+
+  const handleContinue = () => {
+    if (
+      !firstName ||
+      !lastName ||
+      !contact ||
+      !email ||
+      !address ||
+      !paymentMethod
+    ) {
+      alert("Please fill all fields and select a payment method.");
+      return;
+    }
+
+    const order = {
+      customer: {
+        firstName,
+        lastName,
+        contact,
+        email,
+        address,
+      },
+      paymentMethod,
+      items: cartItems,
+      subtotal,
+      vat,
+      total,
+    };
+
+    console.log("Order Submitted:", order);
+    alert("Order submitted successfully!");
+    // Optionally: clear cart and redirect
+  };
+
   return (
     <Wrapper>
       <section className="checkout-section">
+        {/* Left Side - Delivery Form */}
         <div className="checkout">
           <h2>Delivery Contact</h2>
           <hr />
           <div className="checkout-details">
             <label>First Name</label>
-            <input type="text" placeholder="Real" className="details" />
+            <input
+              type="text"
+              placeholder="Real"
+              className="details"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+
             <label>Last Name</label>
-            <input type="text" placeholder="Sullera" className="details" />
+            <input
+              type="text"
+              placeholder="Sullera"
+              className="details"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+
             <label>Contact</label>
-            <input type="text" placeholder="09123456789" className="details" />
-            <label>Email</label>{" "}
+            <input
+              type="text"
+              placeholder="09123456789"
+              className="details"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+            />
+
+            <label>Email</label>
             <input
               type="text"
               placeholder="rsullera@sscgi.com"
               className="details"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <label>Address</label>{" "}
+
+            <label>Address</label>
             <input
               type="text"
               placeholder="1012 Metropolitan Avenue, Makati City, 1203"
               className="details"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
+
             <label>Payment</label>
             <label>
-              Cod <input type="checkbox" name="" id="" />
+              COD{" "}
+              <input
+                type="radio"
+                name="payment"
+                value="COD"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
             </label>
             <label>
-              Paypal
-              <input type="checkbox" name="" id="" />
+              PayPal{" "}
+              <input
+                type="radio"
+                name="payment"
+                value="PayPal"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
             </label>
           </div>
-          <button>Continue</button>
+
+          <button onClick={handleContinue}>Continue</button>
         </div>
+
+        {/* Right Side - Order Summary */}
         <div className="summary">
           <p>Order Summary</p>
-          <p>img</p>
-          <p>Product Title</p>
-          <p>Price</p>
-          <p>QTY</p>
+          {cartItems.length === 0 ? (
+            <p>Your cart is empty</p>
+          ) : (
+            cartItems.map((item) => (
+              <div key={item._id} className="summary-item">
+                <img src={item.image} alt={item.name} width={50} />
+                <p>{item.name}</p>
+                <p>₱{item.price}</p>
+                <p>QTY: {item.quantity}</p>
+              </div>
+            ))
+          )}
           <hr />
-          <p>Subtotal</p>
-          <p>Delivery Fee</p>
-          <p>Total</p>
+          <p>Subtotal: ₱{subtotal.toFixed(2)}</p>
+          <p>VAT (12%): ₱{vat.toFixed(2)}</p>
+          <p>Total: ₱{total.toFixed(2)}</p>
         </div>
       </section>
     </Wrapper>
