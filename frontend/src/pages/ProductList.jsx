@@ -14,9 +14,10 @@ function ProductList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [modalQuantity, setModalQuantity] = useState(1);
 
-  const { addToCart } = useCart(); // ✅ get addToCart function
-  const navigate = useNavigate(); // ✅ for redirect
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -36,6 +37,7 @@ function ProductList() {
 
   const openModal = (product) => {
     setSelectedProduct(product);
+    setModalQuantity(1); // Reset quantity whenever modal opens
     setIsModalOpen(true);
   };
 
@@ -108,9 +110,9 @@ function ProductList() {
     setProducts(filtered);
   };
 
-  // ✅ New: Add product then navigate to cart
-  const handleAddToCart = (product) => {
-    addToCart(product, 1);
+  // Add to cart with quantity
+  const handleAddToCart = (product, quantity = 1) => {
+    addToCart(product, quantity);
     navigate("/cart");
   };
 
@@ -206,12 +208,12 @@ function ProductList() {
                         <h3>{product.name}</h3>
                       </div>
 
-                      {/* ✅ Fixed button */}
+                      {/* Add to Cart button from card */}
                       <button
                         className="add-to-cart"
                         onClick={(e) => {
-                          e.stopPropagation(); // prevent modal open
-                          handleAddToCart(product);
+                          e.stopPropagation();
+                          handleAddToCart(product, 1); // Card always adds 1
                         }}
                       >
                         Add to cart
@@ -257,8 +259,15 @@ function ProductList() {
                 <input
                   type="number"
                   min="1"
-                  defaultValue="1"
                   max={selectedProduct.stock}
+                  value={modalQuantity}
+                  onChange={(e) => {
+                    let val = Number(e.target.value);
+                    if (val < 1) val = 1;
+                    if (val > selectedProduct.stock)
+                      val = selectedProduct.stock;
+                    setModalQuantity(val);
+                  }}
                   className="modal-input"
                 />
               </span>
@@ -279,10 +288,10 @@ function ProductList() {
               View More...
             </Link>
             <div className="modal-buttons">
-              {/* ✅ Fixed: Add to Cart works */}
+              {/* Add to Cart with quantity */}
               <button
                 className="add-to-cart-btn modal-btn"
-                onClick={() => handleAddToCart(selectedProduct)}
+                onClick={() => handleAddToCart(selectedProduct, modalQuantity)}
               >
                 Add to Cart
               </button>

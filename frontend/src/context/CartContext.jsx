@@ -25,14 +25,23 @@ export function CartProvider({ children, user }) {
   const addToCart = (product, quantity = 1) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item._id === product._id);
+
       if (existing) {
+        // Calculate new quantity but do not exceed stock
+        const newQuantity = Math.min(
+          existing.quantity + quantity,
+          product.stock
+        );
         return prev.map((item) =>
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
+          item._id === product._id ? { ...item, quantity: newQuantity } : item
         );
       }
-      return [...prev, { ...product, quantity }];
+
+      // For new items, don't allow adding more than stock
+      return [
+        ...prev,
+        { ...product, quantity: Math.min(quantity, product.stock) },
+      ];
     });
   };
 

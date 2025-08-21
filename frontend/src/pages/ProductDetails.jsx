@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Wrapper from "../assets/wrappers/ProductDetails";
-import { useCart } from "../context/CartContext"; // ✅ import cart context
+import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1); // ✅ track quantity
-  const { addToCart } = useCart(); // ✅ get addToCart function
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     axios
@@ -17,13 +17,15 @@ function ProductDetails() {
       .catch((err) => console.error("Error fetching product:", err));
   }, [id]);
 
-  if (!product) {
-    return <p>Loading...</p>;
-  }
+  if (!product) return <p>Loading...</p>;
 
   const handleAddToCart = () => {
-    addToCart(product, quantity); // add the product with selected quantity
-    alert(`${product.name} added to cart!`);
+    if (quantity > product.stock) {
+      alert(`Only ${product.stock} items in stock.`);
+      return;
+    }
+    addToCart(product, quantity);
+    alert(`${quantity} x ${product.name} added to cart!`);
   };
 
   return (
@@ -32,15 +34,15 @@ function ProductDetails() {
         {/* Image Section */}
         <div className="product-bg left">
           <div className="sub-container">
-            <div className="sub-bg">
-              <img src={product.image} alt={product.name} className="sub-img" />
-            </div>
-            <div className="sub-bg">
-              <img src={product.image} alt={product.name} className="sub-img" />
-            </div>
-            <div className="sub-bg">
-              <img src={product.image} alt={product.name} className="sub-img" />
-            </div>
+            {[...Array(3)].map((_, i) => (
+              <div className="sub-bg" key={i}>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="sub-img"
+                />
+              </div>
+            ))}
           </div>
           <div className="main-bg">
             <img src={product.image} alt={product.name} className="main-img" />
@@ -61,12 +63,19 @@ function ProductDetails() {
               min="1"
               max={product.stock}
               value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
+              onChange={(e) => {
+                let val = Number(e.target.value);
+                if (val < 1) val = 1;
+                if (val > product.stock) val = product.stock;
+                setQuantity(val);
+              }}
             />
           </p>
           <div className="product-btn">
-            <button onClick={handleAddToCart}>Add to Cart</button>
-            <button>Buy Now</button>
+            <button onClick={handleAddToCart} disabled={product.stock === 0}>
+              Add to Cart
+            </button>
+            <button disabled={product.stock === 0}>Buy Now</button>
           </div>
         </div>
       </div>
