@@ -38,7 +38,6 @@ const Wrapper = styled.main`
     width: 650px;
     padding-right: 50px;
     z-index: 22;
-    /*  padding: 50px 50px 50px 50px; */
   }
   .hero-btn {
     padding-left: 70px;
@@ -55,12 +54,14 @@ const Wrapper = styled.main`
   .hero-btn-btn:hover {
     background-color: #0f3a3b;
   }
+
   ////BEST SECTION
 
   .best-section {
-    height: 100vh;
+    height: 100%;
     background-color: #f3e5ce;
     color: #174e4f;
+    padding-bottom: 50px;
   }
   .best-text {
     display: flex;
@@ -69,85 +70,102 @@ const Wrapper = styled.main`
   }
   .main-best-text {
     font-size: 48px;
+    font-weight: 600;
   }
   .sub-best-text {
     font-size: 32px;
+    cursor: pointer;
   }
 
-  .best-container {
-    display: flex;
-    margin: 0 70px 0 70px;
-    gap: 40px;
-  }
-  .best-container-image {
-    height: 410px;
-    width: 410px;
-    border: 5px solid red;
-    background-color: #174e4f;
+  /* ✅ copied from ProductList */
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    gap: 30px;
+    margin: 0 70px 30px 70px;
   }
 
   ////// CARD PRODUCT START
   .card {
+    border: 2px solid #174e4f;
     width: 270px;
-    height: 370px;
-    background: linear-gradient(135deg, #174e4f 55%, #f3e5ce 50%);
+    height: 420px;
     border-radius: 16px;
-    padding: 10px;
+    background: linear-gradient(145deg, #174e4f 50%, #f3e5ce 50%);
     position: relative;
-    font-family: "Roboto";
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    color: #fff;
-    border: 1px solid #174e4f;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   }
 
-  .card-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .card-category {
     color: #f3e5ce;
-    border: none;
+    padding-top: 10px;
   }
-
   .price {
     background-color: #f3e5ce;
     color: #174e4f;
     padding: 14px;
+    border: 2px solid #174e4f;
+    min-width: 100px;
     border-radius: 50%;
     font-weight: bold;
     font-size: 26px;
+    text-align: center;
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: auto;
+    font-family: "Roboto";
+  }
+  .category {
+    padding: 20px;
+    font-style: italic;
   }
 
   .image-container {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 6px solid #f3e5ce;
-    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 10px 0;
+    transition: all 0.3s ease;
   }
-
+  .image-image-container {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    border: 6px solid #f3e5ce;
+    overflow: hidden;
+    display: flex;
+  }
   .image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border: 1px solid #f3e5ce;
+  }
+  .image-container:hover {
+    transform: scale(1.1);
+  }
+
+  .card-header {
+    text-align: center;
+    font-size: 26px;
+    padding: 5px 35px 10px 35px;
   }
 
   .add-to-cart {
-    background-color: #174e4f;
-    color: #f3e5ce;
-    border: none;
-    padding: 10px 28px;
-    border-radius: 12px;
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 16px;
+    font-weight: 600;
+    background-color: #174e4f;
+    margin-top: 10px;
+    color: #f3e5ce;
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
   }
-
   .add-to-cart:hover {
     background-color: #0f3a3b;
   }
@@ -166,7 +184,6 @@ const Wrapper = styled.main`
     color: #f3e5ce;
     padding: 40px 70px 15px 70px;
   }
-
   .off-btn {
     padding-left: 70px;
   }
@@ -182,26 +199,21 @@ const Wrapper = styled.main`
   .off-btn-btn:hover {
     background-color: #e7d5b8;
   }
-
   .off-image {
     position: absolute;
     right: 0;
     bottom: 0;
     height: 350px;
     padding-right: 70px;
-    /* width: 350px; */
   }
 
   /// ABOUT SECTION
-
   .about-section {
     height: 100vh;
     background-color: #f3e5ce;
     color: #174e4f;
-
     padding: 100px 70px 70px 70px;
   }
-
   .about-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -214,12 +226,10 @@ const Wrapper = styled.main`
     font-size: 22px;
     line-height: 32px;
   }
-
   .about-image {
     display: flex;
     justify-content: end;
   }
-
   .about-image-image {
     height: 400px;
     width: 500px;

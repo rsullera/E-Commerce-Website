@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Home";
 
-import coffee from "../assets/images/cofff.webp";
 import mag from "../assets/images/mag3.png";
 import cap from "../assets/images/modelcoffee.png";
 import store from "../assets/images/kk.jpg";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Home = ({ user, error }) => {
   const location = useLocation();
+  const [bestSellers, setBestSellers] = useState([]);
 
   useEffect(() => {
     if (location.hash) {
@@ -22,6 +23,16 @@ const Home = ({ user, error }) => {
       }
     }
   }, [location]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => {
+        const best = res.data.slice(0, 4);
+        setBestSellers(best);
+      })
+      .catch((err) => console.error("Error fetching best sellers:", err));
+  }, []);
 
   return (
     <Wrapper>
@@ -48,68 +59,38 @@ const Home = ({ user, error }) => {
               <p className="sub-best-text">Browse all products →</p>
             </Link>
           </div>
-          <div className="best-container">
-            <div className="card">
-              <div className="card-header">
-                <h3>Product Title</h3>
-                <span className="price">$20</span>
-              </div>
 
-              <div className="image-container">
-                <img src={coffee} alt="coffee" />
-              </div>
+          <div className="card-container">
+            {bestSellers.length > 0 ? (
+              bestSellers.map((product) => (
+                <div className="card" key={product._id}>
+                  <div className="card-category">
+                    <span className="category">{product.category}</span>
+                    <span className="price">₱{product.price}</span>
+                  </div>
 
-              <button className="add-to-cart">Add to cart</button>
-            </div>
+                  <Link to={`/productdetails/${product._id}`}>
+                    <div className="image-container">
+                      <div className="image-image-container">
+                        <img src={product.image} alt={product.name} />
+                      </div>
+                    </div>
+                  </Link>
 
-            <div className="card">
-              <div className="card-header">
-                <h3>Product Title</h3>
-                <span className="price">$20</span>
-              </div>
+                  <Link to={`/productdetails/${product._id}`}>
+                    <div className="card-header">
+                      <h3>{product.name}</h3>
+                    </div>
+                  </Link>
 
-              <div className="image-container">
-                <img src={coffee} alt="coffee" />
-              </div>
-
-              <button className="add-to-cart">Add to cart</button>
-            </div>
-            <div className="card">
-              <div className="card-header">
-                <h3>Product Title</h3>
-                <span className="price">$20</span>
-              </div>
-
-              <div className="image-container">
-                <img src={coffee} alt="coffee" />
-              </div>
-
-              <button className="add-to-cart">Add to cart</button>
-            </div>
-            <div className="card">
-              <div className="card-header">
-                <h3>Product Title</h3>
-                <span className="price">$20</span>
-              </div>
-
-              <div className="image-container">
-                <img src={coffee} alt="coffee" />
-              </div>
-
-              <button className="add-to-cart">Add to cart</button>
-            </div>
-            <div className="card">
-              <div className="card-header">
-                <h3>Product Title</h3>
-                <span className="price">$20</span>
-              </div>
-
-              <div className="image-container">
-                <img src={coffee} alt="coffee" />
-              </div>
-
-              <button className="add-to-cart">Add to cart</button>
-            </div>
+                  <Link to={`/productdetails/${product._id}`}>
+                    <button className="add-to-cart">View Details</button>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <p>Loading best sellers...</p>
+            )}
           </div>
         </section>
 
@@ -118,7 +99,7 @@ const Home = ({ user, error }) => {
           <p className="main-off-text">
             Grab Upto 50% Off on <br />
             Selected Coffee
-          </p>{" "}
+          </p>
           <Link to="/productlist#product-section" className="nav-link">
             <div className="off-btn">
               <button className="off-btn-btn">Buy Now</button>
@@ -154,4 +135,5 @@ const Home = ({ user, error }) => {
     </Wrapper>
   );
 };
+
 export default Home;
