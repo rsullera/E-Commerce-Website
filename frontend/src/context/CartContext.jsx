@@ -22,6 +22,7 @@ export function CartProvider({ children, user }) {
     }
   }, [cartItems, user]);
 
+  // ➕ Add to cart
   const addToCart = (product, quantity = 1) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item._id === product._id);
@@ -45,12 +46,23 @@ export function CartProvider({ children, user }) {
     });
   };
 
+  // ❌ Remove one item from cart
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item._id !== id));
   };
 
+  // 🧹 Clear the entire cart
+  const clearCart = () => {
+    setCartItems([]);
+    if (user) {
+      localStorage.removeItem(`cart_${user.username}`);
+    }
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );

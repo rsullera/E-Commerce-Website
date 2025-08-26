@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/CheckOut";
 import { useCart } from "../context/CartContext";
+import axios from "axios";
 
 function CheckOut() {
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [contact, setContact] = useState("");
@@ -20,7 +21,7 @@ function CheckOut() {
   const vat = subtotal * 0.12; // 12% VAT
   const total = subtotal + vat;
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (
       !firstName ||
       !lastName ||
@@ -34,23 +35,44 @@ function CheckOut() {
     }
 
     const order = {
-      customer: {
-        firstName,
-        lastName,
-        contact,
-        email,
-        address,
-      },
+      customerName: `${firstName} ${lastName}`,
+      contact,
+      email,
+      address,
       paymentMethod,
-      items: cartItems,
+      items: cartItems.map((item) => ({
+        productId: item._id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image,
+      })),
       subtotal,
       vat,
-      total,
+      totalAmount: total,
     };
 
-    console.log("Order Submitted:", order);
-    alert("Order submitted successfully!");
-    // Optionally: clear cart and redirect
+    console.log("🛒 Sending order payload:", order);
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post("http://localhost:5000/api/orders", order, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      alert("Order submitted successfully!");
+      console.log("Saved order:", res.data);
+
+      clearCart();
+
+      // TODO: clear cart & redirect
+    } catch (err) {
+      console.error("❌ Order error:", err.response?.data || err.message);
+      alert("Error submitting order.");
+    }
   };
 
   return (
