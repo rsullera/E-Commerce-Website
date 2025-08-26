@@ -5,6 +5,8 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Navbar,
   Home,
@@ -25,12 +27,11 @@ import {
   UpdateProducts,
   UserOrders,
 } from "./pages";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // add loading state
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -47,9 +48,14 @@ function App() {
           localStorage.removeItem("token");
         }
       }
+      setLoading(false); // done loading after fetch attempt
     };
     fetchUser();
   }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <CartProvider user={user}>
@@ -71,7 +77,7 @@ function AppContent({ user, setUser, error }) {
         <Route
           path="/"
           element={
-            user && user.role === "admin" ? (
+            user && (user.role === "admin" || user.role === "super admin") ? (
               <Navigate to="/admin" replace />
             ) : (
               <Home user={user} error={error} />
@@ -90,20 +96,29 @@ function AppContent({ user, setUser, error }) {
         <Route path="/productdetails/:id" element={<ProductDetails />} />
         <Route path="/my-orders" element={<UserOrders />} />
 
-        {/* ✅ Admin protected routes */}
+        {/* Admin Protected Routes */}
         <Route
           path="/admin/*"
           element={
-            user && user.role === "admin" ? (
+            user && (user.role === "admin" || user.role === "super admin") ? (
               <Admin user={user} setUser={setUser} />
             ) : (
               <Navigate to="/" replace />
             )
           }
         >
-          <Route index element={<Users />} />
-          <Route path="create" element={<CreateUser />} />
-          <Route path="update/:id" element={<UpdateUser />} />
+          {user?.role === "super admin" && (
+            <>
+              <Route index element={<Users />} />
+              <Route path="create" element={<CreateUser />} />
+              <Route path="update/:id" element={<UpdateUser />} />
+            </>
+          )}
+
+          {user?.role === "admin" && (
+            <Route index element={<Navigate to="/admin/products" replace />} />
+          )}
+
           <Route path="products" element={<Products />} />
           <Route path="products/create" element={<CreateProducts />} />
           <Route path="products/update/:id" element={<UpdateProducts />} />

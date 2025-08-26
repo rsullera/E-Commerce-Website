@@ -1,20 +1,22 @@
 import React from "react";
 import Wrapper from "../assets/wrappers/Admin";
 import coffee from "../assets/images/nguso1.png";
-import { Link, useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 
 const Admin = ({ user, setUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Sidebar items and paths
+  // Sidebar items based on role
   const sideItems = [
-    { label: "Users", path: "/admin" },
+    ...(user?.role === "super admin"
+      ? [{ label: "Users", path: "/admin" }]
+      : []),
     { label: "Products", path: "/admin/products" },
     { label: "Orders", path: "/admin/order" },
   ];
 
-  // Determine which sidebar item is active based on current path
+  // Find active sidebar item based on URL path
   const activeItem =
     sideItems
       .slice()
@@ -23,7 +25,7 @@ const Admin = ({ user, setUser }) => {
         (item) =>
           location.pathname === item.path ||
           location.pathname.startsWith(item.path)
-      )?.label || "Users";
+      )?.label || "";
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -68,7 +70,6 @@ const Admin = ({ user, setUser }) => {
             <label>Welcome {user?.username || "Admin"}</label>
           </div>
 
-          {/* Outlet renders nested routes here */}
           <div className="admin-content">
             <Outlet />
           </div>
