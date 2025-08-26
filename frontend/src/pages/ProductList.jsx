@@ -295,7 +295,24 @@ function ProductList() {
               >
                 Add to Cart
               </button>
-              <button className="buy-now-btn modal-btn">Buy Now</button>
+
+              {/* Buy Now button */}
+              <button
+                className="buy-now-btn modal-btn"
+                onClick={() => {
+                  closeModal(); // Close modal
+                  // Navigate to checkout with only this product
+                  navigate("/checkout", {
+                    state: {
+                      products: [
+                        { ...selectedProduct, quantity: modalQuantity },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Wrapper from "../assets/wrappers/ProductDetails";
 import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
@@ -19,6 +20,7 @@ function ProductDetails() {
 
   if (!product) return <p>Loading...</p>;
 
+  // Add to cart normally
   const handleAddToCart = () => {
     if (quantity > product.stock) {
       alert(`Only ${product.stock} items in stock.`);
@@ -26,6 +28,19 @@ function ProductDetails() {
     }
     addToCart(product, quantity);
     alert(`${quantity} x ${product.name} added to cart!`);
+  };
+
+  // Buy Now functionality
+  const handleBuyNow = () => {
+    if (quantity > product.stock) {
+      alert(`Only ${product.stock} items in stock.`);
+      return;
+    }
+
+    // Navigate to checkout with only this product
+    navigate("/checkout", {
+      state: { products: [{ ...product, quantity }] },
+    });
   };
 
   return (
@@ -71,11 +86,14 @@ function ProductDetails() {
               }}
             />
           </p>
+
           <div className="product-btn">
             <button onClick={handleAddToCart} disabled={product.stock === 0}>
               Add to Cart
             </button>
-            <button disabled={product.stock === 0}>Buy Now</button>
+            <button onClick={handleBuyNow} disabled={product.stock === 0}>
+              Buy Now
+            </button>
           </div>
         </div>
       </div>

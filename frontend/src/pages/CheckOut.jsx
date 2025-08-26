@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/CheckOut";
 import { useCart } from "../context/CartContext";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 function CheckOut() {
   const { cartItems, clearCart } = useCart();
+  const location = useLocation();
+
+  // If navigated via Buy Now, use that product; otherwise, use cart
+  const checkoutItems = location.state?.products || cartItems;
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [contact, setContact] = useState("");
@@ -13,7 +19,7 @@ function CheckOut() {
   const [paymentMethod, setPaymentMethod] = useState(""); // COD or PayPal
 
   // Calculate subtotal
-  const subtotal = cartItems.reduce(
+  const subtotal = checkoutItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -40,7 +46,7 @@ function CheckOut() {
       email,
       address,
       paymentMethod,
-      items: cartItems.map((item) => ({
+      items: checkoutItems.map((item) => ({
         productId: item._id,
         name: item.name,
         price: item.price,
@@ -66,9 +72,9 @@ function CheckOut() {
       alert("Order submitted successfully!");
       console.log("Saved order:", res.data);
 
-      clearCart();
+      if (!location.state?.products) clearCart();
 
-      // TODO: clear cart & redirect
+      window.location.href = "/";
     } catch (err) {
       console.error("❌ Order error:", err.response?.data || err.message);
       alert("Error submitting order.");
@@ -155,10 +161,10 @@ function CheckOut() {
         {/* Right Side - Order Summary */}
         <div className="summary">
           <p>Order Summary</p>
-          {cartItems.length === 0 ? (
+          {checkoutItems.length === 0 ? (
             <p>Your cart is empty</p>
           ) : (
-            cartItems.map((item) => (
+            checkoutItems.map((item) => (
               <div key={item._id} className="summary-item">
                 <img src={item.image} alt={item.name} width={50} />
                 <p>{item.name}</p>
