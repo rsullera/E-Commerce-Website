@@ -20,6 +20,7 @@
   "homepage": "https://github.com/rsullera/jobify#readme",
   "description": "",
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.8.3",
     "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.7",
     "cors": "^2.8.5",
