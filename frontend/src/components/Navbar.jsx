@@ -87,8 +87,8 @@ const Navbar = ({ user, setUser }) => {
                 <div className="dropdown">
                   <span className="username">{user.username}</span>
                   <div className="dropdown-content">
-                    <Link to="/settings" className="dropdown-item">
-                      Settings
+                    <Link to="/my-orders" className="dropdown-item">
+                      My Orders
                     </Link>
                     <Link
                       to="/login"

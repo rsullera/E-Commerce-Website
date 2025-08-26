@@ -17,3 +17,4 @@ export { default as UpdateUser } from "../pages/admin/UpdateUser";
 export { default as Products } from "../pages/products/Products";
 export { default as CreateProducts } from "../pages/products/CreateProducts";
 export { default as UpdateProducts } from "../pages/products/UpdateProducts";
+export { default as UserOrders } from "../pages/UserOrders";

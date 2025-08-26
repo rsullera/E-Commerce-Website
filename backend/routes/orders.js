@@ -1,13 +1,13 @@
 import express from "express";
 import Order from "../models/Order.js";
-import { protect } from "../middleware/auth.js"; // import your auth middleware
+import { protect } from "../middleware/auth.js"; // auth middleware
 
 const router = express.Router();
 
-// Create new order
+// ✅ Create new order
 router.post("/", protect, async (req, res) => {
   try {
-    // ✅ Sanitize order items
+    // Sanitize items
     const sanitizedItems = req.body.items.map((item) => ({
       name: item.name,
       price: item.price,
@@ -19,10 +19,11 @@ router.post("/", protect, async (req, res) => {
     }));
 
     const orderData = {
-      user: req.user._id, // ✅ take from logged-in user, not req.body
+      user: req.user._id,
       items: sanitizedItems,
       totalAmount: req.body.totalAmount,
       status: req.body.status || "Pending",
+      trackingNumber: `TRK-${Date.now()}`, // auto generate tracking
     };
 
     const order = new Order(orderData);
@@ -34,7 +35,7 @@ router.post("/", protect, async (req, res) => {
   }
 });
 
-// Get all orders (for admin)
+// ✅ Get all orders (Admin)
 router.get("/", async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
@@ -44,7 +45,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Update order status (admin)
+// ✅ Get logged-in user's orders
+router.get("/my", protect, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id }).sort({
+      createdAt: -1,
+    });
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Update order status (Admin)
 router.put("/:id/status", async (req, res) => {
   try {
     const { status } = req.body;

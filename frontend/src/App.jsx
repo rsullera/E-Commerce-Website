@@ -23,6 +23,7 @@ import {
   Products,
   CreateProducts,
   UpdateProducts,
+  UserOrders,
 } from "./pages";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -87,6 +88,7 @@ function AppContent({ user, setUser, error }) {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/productdetails/:id" element={<ProductDetails />} />
+        <Route path="/my-orders" element={<UserOrders />} />
 
         {/* ✅ Admin protected routes */}
         <Route

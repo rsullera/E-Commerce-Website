@@ -1,125 +1,129 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Wrapper from "../../assets/wrappers/Users";
+import axios from "axios";
+import Wrapper from "../../assets/wrappers/Orders";
 
-function Order() {
-  const [users, setUsers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+function AdminOrders() {
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    axios
-      .get("http://localhost:5000/api/users", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.log(err));
+    fetchOrders();
   }, []);
 
-  const handleDelete = async (id) => {
-    const token = localStorage.getItem("token");
-
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
-
+  // Fetch all orders
+  const fetchOrders = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`, {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("http://localhost:5000/api/orders", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+      setOrders(res.data);
     } catch (err) {
-      console.error("Error deleting user:", err);
-      alert("Failed to delete user.");
+      console.error(
+        "❌ Error fetching orders:",
+        err.response?.data || err.message
+      );
     }
   };
 
-  // Pagination calculations
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(users.length / usersPerPage);
+  // Update order status
+  const updateStatus = async (id, newStatus) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.put(
+        `http://localhost:5000/api/orders/${id}/status`,
+        { status: newStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-  const renderPagination = () => {
-    const pages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(
-        <button
-          key={i}
-          className={`btn btn-sm me-1 ${
-            currentPage === i ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setCurrentPage(i)}
-          aria-current={currentPage === i ? "page" : undefined}
-        >
-          {i}
-        </button>
+      setOrders((prev) =>
+        prev.map((order) => (order._id === id ? res.data : order))
+      );
+    } catch (err) {
+      console.error(
+        "❌ Error updating status:",
+        err.response?.data || err.message
       );
     }
-    return pages;
   };
 
   return (
     <Wrapper>
       <div className="page-container">
         <div className="card">
-          <div className="users-dashboard">
-            <h2>Users Dashboard</h2>
-            <Link to="/admin/create" className="btn-add">
-              Add +
-            </Link>
+          <div className="orders-dashboard">
+            <h2>Orders Dashboard</h2>
           </div>
-          <table className="table-custom">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentUsers.length === 0 ? (
-                <tr>
-                  <td colSpan="5" className="text-center">
-                    No users found.
-                  </td>
-                </tr>
-              ) : (
-                currentUsers.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <Link
-                        to={`/admin/update/${user._id}`}
-                        className="btn-update"
-                      >
-                        Update
-                      </Link>
-                      <button
-                        className="btn-delete"
-                        onClick={() => handleDelete(user._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
 
-          <div className="pagination-container">{renderPagination()}</div>
+          {orders.length === 0 ? (
+            <p className="text-center">No orders yet.</p>
+          ) : (
+            <div className="table-scroll">
+              <table className="table-custom">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Total</th>
+                    <th>Placed</th>
+                    <th>Items</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order._id}>
+                      <td>{order._id}</td>
+                      <td>
+                        ₱
+                        {typeof order.totalAmount === "number"
+                          ? order.totalAmount.toFixed(2)
+                          : "0.00"}
+                      </td>
+                      <td>{new Date(order.createdAt).toLocaleString()}</td>
+
+                      {/* Items */}
+                      <td>
+                        <ul className="items-list">
+                          {order.items.map((item) => (
+                            <li key={item._id} className="item-row">
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="item-image"
+                              />
+                              <span>
+                                {item.name} — {item.quantity} × ₱{item.price}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+
+                      {/* Status dropdown */}
+                      <td>
+                        <select
+                          className={`select-status status-${order.status.toLowerCase()}`}
+                          value={order.status}
+                          onChange={(e) =>
+                            updateStatus(order._id, e.target.value)
+                          }
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Completed">Completed</option>
+                          <option value="Cancelled">Cancelled</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>
   );
 }
 
-export default Order;
+export default AdminOrders;
